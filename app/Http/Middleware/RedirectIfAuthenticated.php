@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
+    public const GUARD_USER = 'users';
+    public const GUARD_OWNER = 'owners';
+    public const GUARD_ADMIN = 'admin';
     /**
      * Handle an incoming request.
      *
@@ -19,14 +22,15 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
-        $guards = empty($guards) ? [null] : $guards;
-
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
-            }
+        if (Auth::guard(self::GUARD_ADMIN)->check()) {
+            return redirect(RouteServiceProvider::BACKEND_HOME);
         }
-
+        if (Auth::guard(self::GUARD_OWNER)->check()) {
+            return redirect(RouteServiceProvider::OWNER_HOME);
+        }
+        if (Auth::guard(self::GUARD_USER)->check()) {
+            return redirect(RouteServiceProvider::HOME);
+        }
         return $next($request);
     }
 }
