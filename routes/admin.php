@@ -71,4 +71,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
-})->middleware(['auth:admin'])->name('dashboard');
+})->middleware('auth:admin')->name('dashboard');
+
+Route::prefix('owners')->middleware('auth:admin')->group(function () {
+    Route::get('index', App\Http\Actions\Admin\OwnerIndexAction::class)->name('owner.index');
+    Route::get('edit/{id}', App\Http\Actions\Admin\OwnerEditAction::class)->name('owner.edit');
+    Route::post('update', App\Http\Actions\Admin\OwnerUpdateAction::class)->name('owner.update');
+    Route::post('store', App\Http\Actions\Admin\OwnerStoreAction::class)->name('owner.store');
+    Route::post('destroy/{id}', App\Http\Actions\Admin\OwnerDestroyAction::class)->name('owner.destroy');
+});
