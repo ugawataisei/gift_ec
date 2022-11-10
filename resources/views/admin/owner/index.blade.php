@@ -22,7 +22,11 @@ use App\Models\Owner;
                             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
 
                                 <div class="flex pl-4 mt-4 mb-4 lg:w-2/3 w-full text-right">
-                                    <button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">新規作成</button>
+                                    <button type="button"
+                                            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4
+                                            focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center
+                                            mr-2 mb-2"><i class="fa-solid fa-plus"></i>新規作成
+                                    </button>
                                 </div>
 
                                 <div class="overflow-x-auto relative mb-4">
@@ -65,17 +69,17 @@ use App\Models\Owner;
                                                     {{ $model->created_at->diffforHumans() }}
                                                 </td>
                                                 <td class="py-4 px-6">
-                                                    <button type="button"
+                                                    <button type="button" onclick="location.href='{{ route('admin.owner.edit', ['id' => $model->id]) }}'"
                                                             class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br
                                                             focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50
-                                                            dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-4 py-2.5 text-center mr-2 mb-2">編集
+                                                            dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-pen"></i>編集
                                                     </button>
                                                 </td>
                                                 <td class="py-4 px-6">
-                                                    <button type="button"
+                                                    <button type="button" id=""
                                                             class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4
                                                             focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80
-                                                            font-medium rounded-lg text-sm  px-4 py-2.5 text-center mr-2 mb-2">削除
+                                                            font-medium rounded-lg text-sm  px-3 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-trash"></i>削除
                                                     </button>
                                                 </td>
                                             </tr>

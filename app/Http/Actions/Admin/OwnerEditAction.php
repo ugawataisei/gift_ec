@@ -3,6 +3,7 @@
 namespace App\Http\Actions\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Owner;
 use Illuminate\Http\Request;
 
 class OwnerEditAction extends Controller
@@ -12,8 +13,12 @@ class OwnerEditAction extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, $id)
     {
-        return null;
+        $query = Owner::query();
+        $query->findOrFail($id);
+        $model = $query->first();
+
+        return view('admin.owner.edit', compact('model'));
     }
 }
