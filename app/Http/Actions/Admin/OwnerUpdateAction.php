@@ -26,9 +26,7 @@ class OwnerUpdateAction extends Controller
             'password' => Hash::make($request->get('password')),
         ]);
 
-        return redirect('admin/owners/index')->with([
-            'status' => 'info',
-            'message' => 'オーナー情報を更新しました',
-        ]);
+        return redirect("admin/owners/edit/{$request->get('id')}")
+            ->with(['status' => 'info', 'message' => 'オーナー情報を更新しました',]);
     }
 }
