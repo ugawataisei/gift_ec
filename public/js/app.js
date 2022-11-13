@@ -8291,11 +8291,14 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _common_delete_modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./common/delete-modal */ "./resources/js/common/delete-modal.js");
+/* harmony import */ var _common_delete_modal__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_common_delete_modal__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
+
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start();
 
 /***/ }),
 
@@ -8337,6 +8340,62 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/common/delete-modal.js":
+/*!*********************************************!*\
+  !*** ./resources/js/common/delete-modal.js ***!
+  \*********************************************/
+/***/ (() => {
+
+$(function () {
+  $('.delete-owner-submit').on('click', function (event) {
+    var $formId = $(this).attr('data-form-id');
+    var $elForm = $("#".concat($formId, "ModalForm"));
+    var $formRoute = $elForm.attr('action');
+    var formData = new FormData($elForm.get(0));
+    event.preventDefault();
+    $(".ajax-error-".concat($formId)).html('');
+    $.ajax({
+      type: 'POST',
+      url: $formRoute,
+      data: formData,
+      dataType: 'json',
+      processData: false,
+      contentType: false,
+      success: function success(res) {
+        var $modal = $("#delete".concat(res.data.id, "Modal"));
+        if (!$modal.hasClass('hidden')) {
+          $modal.hide();
+        }
+        //delete record
+        var recordId = $("#record".concat(res.data.id));
+        recordId.remove();
+
+        //flash message alert
+        var $baseAlert = $('.base-alert-message').html();
+        var $messageAlert = $('.message-alert');
+        var alertHtml = [];
+        var tmpHtml = $baseAlert;
+        tmpHtml = tmpHtml.replaceAll('{message}', res.message);
+        alertHtml.push(tmpHtml);
+        $messageAlert.html('');
+        $messageAlert.html(alertHtml.join(''));
+        setTimeout(function () {
+          $messageAlert.empty();
+        }, 5000);
+      },
+      error: function error(res) {
+        var messages = res.responseJSON.message;
+        for (var key in messages) {
+          var $elError = $(".ajax-error-".concat($formId));
+          $elError.html(messages[key]);
+        }
+      }
+    });
+  });
+});
 
 /***/ }),
 

@@ -1,4 +1,5 @@
 import './bootstrap';
+import './common/delete-modal';
 
 import Alpine from 'alpinejs';
 

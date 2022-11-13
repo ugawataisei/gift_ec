@@ -2,6 +2,7 @@
 use App\Models\Owner;
 
 /** @var Owner $models */
+
 ?>
 
 
@@ -20,18 +21,17 @@ use App\Models\Owner;
                     <section class="text-gray-600 body-font">
                         <div class="container px-5 py-4 mx-auto">
                             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-
-                                <div class="flex pl-4 mt-4 mb-4 lg:w-2/3 w-full text-right">
+                                <div class="flex pl-4 mt-4 mb-4 lg:w-2/3 w-full">
                                     <button type="button" onclick="location.href='{{ route('admin.owner.create') }}'"
                                             class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4
                                             focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center
                                             mr-2 mb-2"><i class="fa-solid fa-plus"></i>新規作成
                                     </button>
                                 </div>
-
-                                <!-- Flash Messages -->
+                                <!-- Flash Messages with Session-->
                                 <x-flash-message />
-
+                                <!-- Flash Messages with Ajax-->
+                                <div class="message-alert"></div>
                                 <div class="overflow-x-auto relative mb-4">
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -58,7 +58,7 @@ use App\Models\Owner;
                                         </thead>
                                         <tbody>
                                         @foreach($models as $model)
-                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <tr id="record{{ $model->id }}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                 <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                     {{ $model->id }}
                                                 </th>
@@ -79,18 +79,18 @@ use App\Models\Owner;
                                                     </button>
                                                 </td>
                                                 <td class="py-4 px-6">
-                                                    <button type="button" id=""
+                                                    <button type="button" data-modal-toggle="delete{{ $model->id }}Modal"
                                                             class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4
                                                             focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80
                                                             font-medium rounded-lg text-sm  px-3 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-trash"></i>削除
                                                     </button>
                                                 </td>
+                                                <x-form.modal-delete :model="$model" />
                                             </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
                         </div>
                     </section>

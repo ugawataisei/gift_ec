@@ -79,5 +79,5 @@ Route::prefix('owners')->middleware('auth:admin')->group(function () {
     Route::get('create', App\Http\Actions\Admin\OwnerCreateAction::class)->name('owner.create');
     Route::post('update', App\Http\Actions\Admin\OwnerUpdateAction::class)->name('owner.update');
     Route::post('store', App\Http\Actions\Admin\OwnerStoreAction::class)->name('owner.store');
-    Route::post('destroy/{id}', App\Http\Actions\Admin\OwnerDestroyAction::class)->name('owner.destroy');
+    Route::post('destroy', App\Http\Actions\Admin\OwnerDestroyAction::class)->name('owner.destroy');
 });
