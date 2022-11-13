@@ -15,15 +15,16 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="https://kit.fontawesome.com/11bead58f7.js" crossorigin="anonymous"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @if(Auth::guard('admin'))
-                @include('admin-layouts.navigation')
+                @include('layouts.admin-navigation')
             @elseif(Auth::guard('owners'))
-                @include('owner-layouts.navigation')
+                @include('layouts.owner-navigation')
             @else
-                @include('user-layouts.navigation')
+                @include('layouts.user-navigation')
             @endif
 
             <!-- Page Heading -->
