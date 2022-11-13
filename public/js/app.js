@@ -8365,6 +8365,7 @@ $(function () {
       processData: false,
       contentType: false,
       success: function success(res) {
+        console.log(res);
         var $modal = $("#delete".concat(res.data.id, "Modal"));
         if (!$modal.hasClass('hidden')) {
           $modal.hide();

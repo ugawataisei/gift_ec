@@ -4,7 +4,13 @@ use App\Models\Owner;
 /** @var Owner $model */
 
 $formId = 'delete-owner' . $model->id;
-$formRoute = 'admin.owner.destroy';
+
+//urlによってルート変更
+if (strpos(url()->current(), 'expired')) {
+    $formRoute = 'admin.expired-owner.destroy';
+} else {
+    $formRoute = 'admin.owner.destroy';
+}
 ?>
 
 

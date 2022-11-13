@@ -81,3 +81,8 @@ Route::prefix('owners')->middleware('auth:admin')->group(function () {
     Route::post('store', App\Http\Actions\Admin\OwnerStoreAction::class)->name('owner.store');
     Route::post('destroy', App\Http\Actions\Admin\OwnerDestroyAction::class)->name('owner.destroy');
 });
+
+Route::prefix('expired-owners')->middleware('auth:admin')->group(function () {
+    Route::get('index', App\Http\Actions\Admin\ExpiredOwnerIndexAction::class)->name('expired-owner.index');
+    Route::post('destroy', App\Http\Actions\Admin\ExpiredOwnerDestroyAction::class)->name('expired-owner.destroy');
+});
