@@ -1,5 +1,6 @@
 <?php
 use App\Models\Owner;
+use App\Models\Shop;
 
 /** @var Owner $model */
 
@@ -28,6 +29,11 @@ use App\Models\Owner;
                         <div class="mb-6">
                             {{ Form::label('name', 'お名前', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
                             {{ Form::text('name', $model->name, ['class'=>'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light']) }}
+                        </div>
+                        {{--  管理者は店名を更新できない --}}
+                        <div class="mb-6">
+                            {{ Form::label('shop_name', '店名', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
+                            {{ Form::text('shop_name', $model->shop->name, ['readonly', 'class'=>'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light']) }}
                         </div>
                         <div class="mb-6">
                             {{ Form::label('email', 'メールアドレス', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
