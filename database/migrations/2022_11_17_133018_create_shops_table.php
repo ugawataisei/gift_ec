@@ -23,7 +23,11 @@ class CreateShopsTable extends Migration
             $table->timestamps();
 
             //外部キー制約
-            $table->foreign('owner_id')->references('id')->on('owners');
+            $table->foreign('owner_id')
+                ->references('id')
+                ->on('owners')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
