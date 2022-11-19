@@ -19,10 +19,10 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @if(Auth::guard('admin'))
-                @include('layouts.admin-navigation')
-            @elseif(Auth::guard('owners'))
+            @if(Auth::guard('owners'))
                 @include('layouts.owner-navigation')
+            @elseif(Auth::guard('admin'))
+                @include('layouts.admin-navigation')
             @else
                 @include('layouts.user-navigation')
             @endif

@@ -73,3 +73,9 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('owner.dashboard');
 })->middleware(['auth:owners'])->name('dashboard');
+
+Route::prefix('shop')->middleware('auth:owners')->group(function () {
+    Route::get('index', App\Http\Actions\Owner\ShopIndexAction::class)->name('shop.index');
+    Route::get('edit/{id}', App\Http\Actions\Owner\ShopEditAction::class)->name('shop.edit');
+    Route::post('destroy', App\Http\Actions\Owner\ShopDestroyAction::class)->name('shop.destroy');
+});
