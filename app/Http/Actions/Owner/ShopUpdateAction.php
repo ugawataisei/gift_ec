@@ -3,10 +3,11 @@
 namespace App\Http\Actions\Owner;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Owner\ShopUpdateRequest;
 use App\Models\Shop;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use InterventionImage;
 
 class ShopUpdateAction extends Controller
 {
@@ -15,7 +16,7 @@ class ShopUpdateAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(ShopUpdateRequest $request)
     {
         $query = Shop::query();
         $query->where('id', $request->get('id'));
@@ -30,15 +31,34 @@ class ShopUpdateAction extends Controller
         }
 
         DB::transaction(function () use ($request, $model) {
-            //アップロード画像処理
-            $file = Storage::putFile('public/images/shop', $request->file()['file']);
 
-            //データベース更新
+            if ($request->has('image')) {
+                //画像のリサイズ
+                $resizedImage = InterventionImage::make($request->file()['image'])
+                    ->resize(1920, 1080)
+                    ->encode();
+
+                $fileName = uniqid(rand() . '_');
+                $extension = $request->file()['image']->extension();
+                $fileNameToStore = $fileName . '.' . $extension;
+
+                Storage::put('public/images/shops/' . $fileNameToStore, $resizedImage);
+
+                //データベース更新
+                $model->update(
+                    [
+                        'name' => $request->get('name'),
+                        'information' => $request->get('information'),
+                        'file_name' => $fileNameToStore,
+                        'is_selling' => $request->get('is_selling'),
+                    ]
+                );
+            }
+
             $model->update(
                 [
                     'name' => $request->get('name'),
-                    'information' => nl2br($request->get('information')),
-                    'file_name' => $file,
+                    'information' => $request->get('information'),
                     'is_selling' => $request->get('is_selling'),
                 ]
             );

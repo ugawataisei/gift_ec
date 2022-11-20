@@ -27,14 +27,15 @@ use App\Models\Shop;
                                 </a>
                             @else
                                 <a href="#">
-                                    <img class="rounded-t-lg" src="{{ asset('images/shop/' . $model->file_name) }}"
+                                    <img class="rounded-t-lg"
+                                         src="{{ asset('storage/images/shops/' . $model->file_name) }}"
                                          alt=""/>
                                 </a>
                             @endif
                             <div class="p-5">
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $model->name }}</h5>
 
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $model->information }}</p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{!! nl2br($model->information) !!}</p>
 
                                 <div class="ms-auto">
                                     @if ($model->is_selling ===  0)
