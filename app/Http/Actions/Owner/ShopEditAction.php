@@ -11,6 +11,7 @@ class ShopEditAction extends Controller
 {
     public function __construct()
     {
+        //todo: 認証サービスに切り分ける
         $this->middleware('auth:owners');
 
         //他の店舗情報を閲覧できないようにリクエストパラメータと比較
@@ -35,10 +36,13 @@ class ShopEditAction extends Controller
         });
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, int $id)
     {
-        dd('edit');
-        return view('owner.shop.index');
+        $query = Shop::query();
+        $query->where('id', $id);
+        $model = $query->first();
+
+        return view('owner.shop.edit', compact('model'));
     }
 }
 

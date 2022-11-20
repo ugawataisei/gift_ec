@@ -27,7 +27,8 @@ use App\Models\Shop;
                                 </a>
                             @else
                                 <a href="#">
-                                    <img class="rounded-t-lg" src="{{ asset('images/' . $model->file_name) }}" alt=""/>
+                                    <img class="rounded-t-lg" src="{{ asset('images/shop/' . $model->file_name) }}"
+                                         alt=""/>
                                 </a>
                             @endif
                             <div class="p-5">
