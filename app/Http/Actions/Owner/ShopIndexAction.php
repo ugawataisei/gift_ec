@@ -5,6 +5,7 @@ namespace App\Http\Actions\Owner;
 use App\Http\Controllers\Controller;
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShopIndexAction extends Controller
 {
@@ -15,9 +16,13 @@ class ShopIndexAction extends Controller
 
     public function __invoke(Request $request)
     {
-        $query = Shop::query();
-        $model = $query->first();
+        $loginOwnerId = Auth::id();
 
-        return view('owner.shop.index', compact('model'));
+        //将来的に複数の店舗を経営する使用になる為 get()で取得
+        $query = Shop::query();
+        $query->where('owner_id', $loginOwnerId);
+        $models = $query->get();
+
+        return view('owner.shop.index', compact('models'));
     }
 }
