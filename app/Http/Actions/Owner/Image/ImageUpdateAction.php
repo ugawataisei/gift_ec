@@ -3,8 +3,8 @@
 namespace App\Http\Actions\Owner\Image;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Owner\ShopUpdateRequest;
-use App\Models\Shop;
+use App\Http\Requests\Image\ImageUpdateRequest;
+use App\Models\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use InterventionImage;
@@ -16,58 +16,50 @@ class ImageUpdateAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(ShopUpdateRequest $request)
+    public function __invoke(ImageUpdateRequest $request)
     {
-        $query = Shop::query();
+        $query = Image::query();
         $query->where('id', $request->get('id'));
         $model = $query->first();
 
         if ($model === null) {
-            return redirect('owner/shop/edit/' . $request->get('id'))
+            return redirect('owner/image/edit/' . $request->get('id'))
                 ->with([
                     'status' => 'alert',
-                    'message' => '更新対象の店舗情報が存在しませんでした',
+                    'message' => '更新対象の画像情報が存在しませんでした',
                 ]);
         }
 
-        DB::transaction(function () use ($request, $model) {
+        $deleteFileName = $model->file_name;
+        DB::transaction(function () use ($request, $model, $deleteFileName) {
 
-            if ($request->has('image')) {
-                //画像のリサイズ
-                $resizedImage = InterventionImage::make($request->file()['image'])
-                    ->resize(1920, 1080)
-                    ->encode();
+            //画像のリサイズ
+            $resizedImage = InterventionImage::make($request->file()['file'])
+                ->resize(1920, 1080)
+                ->encode();
 
-                $fileName = uniqid(rand() . '_');
-                $extension = $request->file()['image']->extension();
-                $fileNameToStore = $fileName . '.' . $extension;
+            $fileName = uniqid(rand() . '_');
+            $extension = $request->file()['file']->extension();
+            $fileNameToStore = $fileName . '.' . $extension;
 
-                Storage::put('public/images/shops/' . $fileNameToStore, $resizedImage);
+            Storage::put('public/images/products/' . $fileNameToStore, $resizedImage);
+            Storage::delete('public/images/products/' . $deleteFileName);
 
-                //データベース更新
-                $model->update(
-                    [
-                        'name' => $request->get('name'),
-                        'information' => $request->get('information'),
-                        'file_name' => $fileNameToStore,
-                        'is_selling' => $request->get('is_selling'),
-                    ]
-                );
-            }
-
+            //データベース更新
             $model->update(
                 [
-                    'name' => $request->get('name'),
-                    'information' => $request->get('information'),
+                    'owner_id' => $request->get('owner_id'),
+                    'title' => $request->get('title'),
+                    'file_name' => $fileNameToStore,
                     'is_selling' => $request->get('is_selling'),
                 ]
             );
         });
 
-        return redirect('owner/shop/edit/' . $request->get('id'))
+        return redirect('owner/image/edit/' . $request->get('id'))
             ->with([
                 'status' => 'info',
-                'message' => '店舗情報を更新しました',
+                'message' => '画像情報を更新しました',
             ]);
     }
 }
