@@ -83,7 +83,9 @@ Route::prefix('shop')->middleware('auth:owners')->group(function () {
 
 Route::prefix('image')->middleware('auth:owners')->group(function () {
     Route::get('index', App\Http\Actions\Owner\Image\ImageIndexAction::class)->name('image.index');
+    Route::get('create', App\Http\Actions\Owner\Image\ImageCreateAction::class)->name('image.create');
     Route::get('edit/{id}', App\Http\Actions\Owner\Image\ImageEditAction::class)->name('image.edit');
     Route::post('update', App\Http\Actions\Owner\Image\ImageUpdateAction::class)->name('image.update');
+    Route::post('store', App\Http\Actions\Owner\Image\ImageStoreAction::class)->name('image.store');
     Route::post('destroy', App\Http\Actions\Owner\Image\ImageDestroyAction::class)->name('image.destroy');
 });
