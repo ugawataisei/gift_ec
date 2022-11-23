@@ -11653,6 +11653,10 @@ video {
   margin-top: 1.5rem;
 }.mb-1 {
   margin-bottom: 0.25rem;
+}.mr-5 {
+  margin-right: 1.25rem;
+}.ml-5 {
+  margin-left: 1.25rem;
 }.block {
   display: block;
 }.inline-block {
@@ -11811,6 +11815,8 @@ video {
   justify-content: center;
 }.justify-between {
   justify-content: space-between;
+}.justify-items-center {
+  justify-items: center;
 }.space-x-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(2rem * var(--tw-space-x-reverse));

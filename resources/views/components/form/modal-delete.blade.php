@@ -1,14 +1,29 @@
 <?php
+
 use App\Models\Owner;
+use App\Models\Image;
 
-/** @var Owner $model */
+/** @var Owner|Image $model */
 
-$formId = 'delete-owner' . $model->id;
-
-//urlによってルート変更
+$formId = 'delete-' . $model->id;
+//urlによって内容変更
 if (strpos(url()->current(), 'expired')) {
+    //modal
+    $headerTitle = 'オーナー削除';
+    $bodyContent = '削除対象オーナー：' . $model->name . '様';
+    //route
     $formRoute = 'admin.expired-owner.destroy';
+} elseif (strpos(url()->current(), 'image')) {
+    //modal
+    $headerTitle = '画像削除';
+    $bodyContent = '削除対象画像：' . $model->title;
+    //route
+    $formRoute = 'owner.image.destroy';
 } else {
+    //modal
+    $headerTitle = 'オーナー削除';
+    $bodyContent = '削除対象オーナー：' . $model->name . '様';
+    //route
     $formRoute = 'admin.owner.destroy';
 }
 ?>
@@ -19,28 +34,37 @@ if (strpos(url()->current(), 'expired')) {
     'model' => null,
 ])
 <!-- Main modal -->
-<div id="delete{{ $model->id }}Modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
+<div id="delete{{ $model->id }}Modal" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
             <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    オーナー削除
+                    {{ $headerTitle }}
                 </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="delete{{ $model->id }}Modal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="delete{{ $model->id }}Modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+            <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                 role="alert">
                 <span class="font-medium">本当に削除しますか？？</span>
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
                 <p class="text-red-600 ajax-error-{{ $formId }}"></p>
                 <p class="text-base text-red-600 leading-relaxed text-gray-500 dark:text-gray-400">
-                    削除対象オーナー： {{ $model->name }} 様
+                    {{ $bodyContent }}
                 </p>
             </div>
             <!-- Modal footer -->

@@ -3,7 +3,11 @@
 namespace App\Http\Actions\Owner\Image;
 
 use App\Http\Controllers\Controller;
+use App\Models\Image;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ImageDestroyAction extends Controller
 {
@@ -12,9 +16,30 @@ class ImageDestroyAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
-        return view('owner.shop.index');
+        $query = Image::query();
+        $query->where('id', $request->get('id'));
+        $model = $query->first();
+
+        if ($model === null) {
+            return response()->json([
+                'error' => true,
+                'message' => '削除対象のデータが存在しません',
+            ]);
+        }
+
+        DB::transaction(function () use ($model) {
+            Storage::delete('public/images/products/' . $model->file_name);
+            $model->delete();
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => '登録画像を削除しました',
+            'data' => [
+                'id' => $request->get('id'),
+            ]
+        ]);
     }
 }
-
