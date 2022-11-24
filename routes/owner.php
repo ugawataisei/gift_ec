@@ -75,10 +75,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth:owners'])->name('dashboard');
 
 Route::prefix('shop')->middleware('auth:owners')->group(function () {
-    Route::get('index', App\Http\Actions\Owner\ShopIndexAction::class)->name('shop.index');
-    Route::get('edit/{id}', App\Http\Actions\Owner\ShopEditAction::class)->name('shop.edit');
-    Route::post('update', App\Http\Actions\Owner\ShopUpdateAction::class)->name('shop.update');
-    Route::post('destroy', App\Http\Actions\Owner\ShopDestroyAction::class)->name('shop.destroy');
+    Route::get('index', \App\Http\Actions\Owner\Shop\ShopIndexAction::class)->name('shop.index');
+    Route::get('edit/{id}', \App\Http\Actions\Owner\Shop\ShopEditAction::class)->name('shop.edit');
+    Route::post('update', \App\Http\Actions\Owner\Shop\ShopUpdateAction::class)->name('shop.update');
+    Route::post('destroy', \App\Http\Actions\Owner\Shop\ShopDestroyAction::class)->name('shop.destroy');
 });
 
 Route::prefix('image')->middleware('auth:owners')->group(function () {
@@ -88,4 +88,13 @@ Route::prefix('image')->middleware('auth:owners')->group(function () {
     Route::post('update', App\Http\Actions\Owner\Image\ImageUpdateAction::class)->name('image.update');
     Route::post('store', App\Http\Actions\Owner\Image\ImageStoreAction::class)->name('image.store');
     Route::post('destroy', App\Http\Actions\Owner\Image\ImageDestroyAction::class)->name('image.destroy');
+});
+
+Route::prefix('product')->middleware('auth:owners')->group(function () {
+    Route::get('index', App\Http\Actions\Owner\Product\ProductIndexAction::class)->name('product.index');
+    Route::get('create', App\Http\Actions\Owner\Product\ProductCreateAction::class)->name('product.create');
+    Route::get('edit/{id}', App\Http\Actions\Owner\Product\ProductEditAction::class)->name('product.edit');
+    Route::post('update', App\Http\Actions\Owner\Product\ProductUpdateAction::class)->name('product.update');
+    Route::post('store', App\Http\Actions\Owner\Product\ProductStoreAction::class)->name('product.store');
+    Route::post('destroy', App\Http\Actions\Owner\Product\ProductDestroyAction::class)->name('product.destroy');
 });
