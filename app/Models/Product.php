@@ -22,7 +22,7 @@ class Product extends Model
         'image_first',
         'image_second',
         'image_third',
-        'image_forth',
+        'image_fourth',
         'name',
         'information',
         'price',
@@ -43,21 +43,21 @@ class Product extends Model
 
     public function image_first(): HasOne
     {
-        return $this->hasOne(Image::class, 'image_first');
+        return $this->hasOne(Image::class, 'image_first', 'id');
     }
 
     public function image_second(): HasOne
     {
-        return $this->hasOne(Image::class, 'image_second');
+        return $this->hasOne(Image::class, 'image_second', 'id');
     }
 
     public function image_third(): HasOne
     {
-        return $this->hasOne(Image::class, 'image_third');
+        return $this->hasOne(Image::class, 'image_third', 'id');
     }
 
-    public function image_forth(): HasOne
+    public function image_fourth(): HasOne
     {
-        return $this->hasOne(Image::class, 'image_first');
+        return $this->hasOne(Image::class, 'image_fourth', 'id');
     }
 }

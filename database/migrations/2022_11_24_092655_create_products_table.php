@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('image_first')->nullable();
             $table->unsignedBigInteger('image_second')->nullable();
             $table->unsignedBigInteger('image_third')->nullable();
-            $table->unsignedBigInteger('image_forth')->nullable();
+            $table->unsignedBigInteger('image_fourth')->nullable();
             $table->string('name');
             $table->text('information')->nullable();
             $table->unsignedBigInteger('price');
@@ -52,7 +52,7 @@ class CreateProductsTable extends Migration
                 ->references('id')
                 ->on('images');
 
-            $table->foreign('image_forth')
+            $table->foreign('image_fourth')
                 ->references('id')
                 ->on('images');
         });
