@@ -27,6 +27,12 @@
                         {{ __('商品画像') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('owner.product.index')"
+                                :active="request()->routeIs('owner.product.index')">
+                        {{ __('商品管理') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -95,6 +101,11 @@
             <x-nav-link :href="route('owner.image.index')" :active="request()->routeIs('owner.image.index')">
                 {{ __('商品画像') }}
             </x-nav-link>
+            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <x-nav-link :href="route('owner.product.index')" :active="request()->routeIs('owner.product.index')">
+                    {{ __('商品管理') }}
+                </x-nav-link>
+            </div>
         </div>
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

@@ -7,7 +7,7 @@ use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ProductIndexAction extends Controller
+class ProductShowAction extends Controller
 {
     public function __construct()
     {
@@ -22,15 +22,9 @@ class ProductIndexAction extends Controller
 
         $models = $shop->products;
 
-        if ($models === null) {
-            return redirect()->route('owner.shop.index')->with([
-                'status' => 'alert',
-                'message' => '商品情報がまだ登録されていません。商品情報を登録してください。'
-            ]);
-        }
-
         return view('owner.product.index', compact('models'));
     }
 }
+
 
 
