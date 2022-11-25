@@ -2,24 +2,34 @@
 
 use App\Models\Owner;
 use App\Models\Image;
-
-/** @var Owner|Image $model */
+use App\Models\Product;
 
 $formId = 'delete-' . $model->id;
-//urlによって内容変更
+
+//urlによってフォーム内容変更
 if (strpos(url()->current(), 'expired')) {
+    /** @var Owner $model */
     //modal
     $headerTitle = 'オーナー削除';
     $bodyContent = '削除対象オーナー：' . $model->name . '様';
     //route
     $formRoute = 'admin.expired-owner.destroy';
 } elseif (strpos(url()->current(), 'image')) {
+    /** @var Image $model */
     //modal
     $headerTitle = '画像削除';
     $bodyContent = '削除対象画像：' . $model->title;
     //route
     $formRoute = 'owner.image.destroy';
+} elseif (strpos(url()->current(), 'product')) {
+    /** @var Product $model */
+    //modal
+    $headerTitle = '商品削除';
+    $bodyContent = '削除対象商品：' . $model->name;
+    //route
+    $formRoute = 'owner.product.destroy';
 } else {
+    /** @var Owner $model */
     //modal
     $headerTitle = 'オーナー削除';
     $bodyContent = '削除対象オーナー：' . $model->name . '様';
