@@ -94,7 +94,6 @@ Route::prefix('product')->middleware('auth:owners')->group(function () {
     Route::get('index', App\Http\Actions\Owner\Product\ProductIndexAction::class)->name('product.index');
     Route::get('create', App\Http\Actions\Owner\Product\ProductCreateAction::class)->name('product.create');
     Route::get('edit/{id}', App\Http\Actions\Owner\Product\ProductEditAction::class)->name('product.edit');
-    Route::get('show/{id}', App\Http\Actions\Owner\Product\ProductShowAction::class)->name('product.show');
     Route::post('update', App\Http\Actions\Owner\Product\ProductUpdateAction::class)->name('product.update');
     Route::post('store', App\Http\Actions\Owner\Product\ProductStoreAction::class)->name('product.store');
     Route::post('destroy', App\Http\Actions\Owner\Product\ProductDestroyAction::class)->name('product.destroy');
