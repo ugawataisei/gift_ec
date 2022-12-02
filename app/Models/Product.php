@@ -41,23 +41,23 @@ class Product extends Model
         return $this->belongsTo(SecondaryCategory::class);
     }
 
-    public function image_first_relation(): HasOne
+    public function image_first_relation(): BelongsTo
     {
-        return $this->hasOne(Image::class, 'id');
+        return $this->belongsTo(Image::class, 'image_first', 'id');
     }
 
-    public function image_second_relation(): HasOne
+    public function image_second_relation(): BelongsTo
     {
-        return $this->hasOne(Image::class, 'id');
+        return $this->belongsTo(Image::class, 'image_second', 'id');
     }
 
-    public function image_third_relation(): HasOne
+    public function image_third_relation(): BelongsTo
     {
-        return $this->hasOne(Image::class, 'id');
+        return $this->belongsTo(Image::class, 'image_third', 'id');
     }
 
-    public function image_fourth_relation(): HasOne
+    public function image_fourth_relation(): BelongsTo
     {
-        return $this->hasOne(Image::class, 'id');
+        return $this->belongsTo(Image::class, 'image_fourth', 'id');
     }
 }
