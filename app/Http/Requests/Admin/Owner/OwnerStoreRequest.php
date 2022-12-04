@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Owner;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OwnerUpdateRequest extends FormRequest
+class OwnerStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,3 +31,4 @@ class OwnerUpdateRequest extends FormRequest
         ];
     }
 }
+

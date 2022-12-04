@@ -1,52 +1,55 @@
-$(function() {
-   $('.delete-owner-submit').on('click', function(event) {
+$(function () {
+    'use strict';
+    $('.delete-modal-submit').on('click', function (event) {
 
-       const $formId = $(this).attr('data-form-id');
-       const $elForm = $(`#${$formId}ModalForm`);
-       const $formRoute = $elForm.attr('action');
-       const formData = new FormData($elForm.get(0));
+        const $prefix = $(this).attr('data-form-prefix');
+        const $formId = $(this).attr('data-form-id');
+        const $elForm = $(`#${$prefix}${$formId}ModalForm`);
+        const $formRoute = $elForm.attr('action');
+        const formData = new FormData($elForm.get(0));
 
-       event.preventDefault();
-       $(`.ajax-error-${$formId}`).html('');
-       $.ajax({
-         type: 'POST',
-         url: $formRoute,
-         data: formData,
-         dataType: 'json',
-         processData: false,
-         contentType: false,
-         success: function (res) {
-             const $modal = $(`#delete${res.data.id}Modal`);
-             if (!$modal.hasClass('hidden')) {
-                 $modal.hide();
-             }
-             //delete record
-             const recordId = $(`#record${res.data.id}`);
-             recordId.remove();
+        event.preventDefault();
+        $(`.ajax-error-${$formId}`).html('');
 
-             //flash message alert
-            const $baseAlert = $('.base-alert-message').html();
-            const $messageAlert = $('.message-alert');
+        $.ajax({
+            type: 'POST',
+            url: $formRoute,
+            data: formData,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                const $modal = $(`#delete${res.data.id}Modal`);
+                if (!$modal.hasClass('hidden')) {
+                    $modal.hide();
+                }
+                //delete record
+                const recordId = $(`#record${res.data.id}`);
+                recordId.remove();
 
-            let alertHtml = [];
-            let tmpHtml = $baseAlert;
+                //flash message alert
+                const $baseAlert = $('.base-alert-message').html();
+                const $messageAlert = $('.message-alert');
 
-            tmpHtml = tmpHtml.replaceAll('{message}', res.message);
-            alertHtml.push(tmpHtml);
-            $messageAlert.html('');
-            $messageAlert.html(alertHtml.join(''));
+                let alertHtml = [];
+                let tmpHtml = $baseAlert;
 
-            setTimeout(function() {
-                $messageAlert.empty();
-            }, 5000);
-         },
-         error: function (res) {
-            const messages = res.responseJSON.message;
-            for (let key in messages) {
-                let $elError = $(`.ajax-error-${$formId}`);
-                $elError.html(messages[key]);
-            }
-         },
-       });
-   }) ;
+                tmpHtml = tmpHtml.replaceAll('{message}', res.message);
+                alertHtml.push(tmpHtml);
+                $messageAlert.html('');
+                $messageAlert.html(alertHtml.join(''));
+
+                setTimeout(function () {
+                    $messageAlert.empty();
+                }, 5000);
+            },
+            error: function (res) {
+                const messages = res.responseJSON.message;
+                for (let key in messages) {
+                    let $elError = $(`.ajax-error-${$formId}`);
+                    $elError.html(messages[key]);
+                }
+            },
+        });
+    });
 });

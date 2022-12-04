@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Actions\Admin;
+namespace App\Http\Actions\Admin\ExpiredOwner;
 
 use App\Http\Controllers\Controller;
 use App\Models\Owner;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class ExpiredOwnerIndexAction extends Controller
@@ -13,8 +15,14 @@ class ExpiredOwnerIndexAction extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function __invoke(Request $request)
+    /**
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function __invoke(Request $request): View
     {
+        /** @var Collection $models */
         $query = Owner::onlyTrashed();
         $models = $query->get();
 

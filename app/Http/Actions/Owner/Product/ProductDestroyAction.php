@@ -1,40 +1,46 @@
 <?php
 
-namespace App\Http\Actions\Admin;
+namespace App\Http\Actions\Owner\Product;
 
 use App\Http\Controllers\Controller;
-use App\Models\Owner;
+use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
-class OwnerDestroyAction extends Controller
+class ProductDestroyAction extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:owners');
     }
 
-    public function __invoke(Request $request) :JsonResponse
+    /**
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function __invoke(Request $request): JsonResponse
     {
-        $query = Owner::query();
+        /** @var Product $model */
+        $query = Product::query();
         $query->where('id', $request->get('id'));
         $model = $query->first();
-
         if ($model === null) {
             return response()->json([
                 'error' => true,
                 'message' => '削除対象のデータが存在しません',
             ]);
         }
-
         $model->delete();
+
         return response()->json([
             'success' => true,
-            'message' => 'オーナー情報を削除しました',
+            'message' => '登録商品を削除しました',
             'data' => [
                 'id' => $request->get('id'),
             ]
         ]);
     }
 }
-

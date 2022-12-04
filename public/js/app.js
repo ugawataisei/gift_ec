@@ -8293,12 +8293,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _common_delete_modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./common/delete-modal */ "./resources/js/common/delete-modal.js");
 /* harmony import */ var _common_delete_modal__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_common_delete_modal__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _common_image_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./common/image-modal */ "./resources/js/common/image-modal.js");
+/* harmony import */ var _common_image_modal__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_common_image_modal__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start();
+
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"].start();
 
 /***/ }),
 
@@ -8350,9 +8353,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ (() => {
 
 $(function () {
-  $('.delete-owner-submit').on('click', function (event) {
+  'use strict';
+
+  $('.delete-modal-submit').on('click', function (event) {
+    var $prefix = $(this).attr('data-form-prefix');
     var $formId = $(this).attr('data-form-id');
-    var $elForm = $("#".concat($formId, "ModalForm"));
+    var $elForm = $("#".concat($prefix).concat($formId, "ModalForm"));
     var $formRoute = $elForm.attr('action');
     var formData = new FormData($elForm.get(0));
     event.preventDefault();
@@ -8365,7 +8371,6 @@ $(function () {
       processData: false,
       contentType: false,
       success: function success(res) {
-        console.log(res);
         var $modal = $("#delete".concat(res.data.id, "Modal"));
         if (!$modal.hasClass('hidden')) {
           $modal.hide();
@@ -8395,6 +8400,63 @@ $(function () {
         }
       }
     });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/common/image-modal.js":
+/*!********************************************!*\
+  !*** ./resources/js/common/image-modal.js ***!
+  \********************************************/
+/***/ (() => {
+
+$(function () {
+  'use strict';
+
+  //todo : コード汚いので様改善 date 2022/11/27 author 鵜川泰成
+  //画像クリック
+  $('.select-image').on('click', function () {
+    //outline css 適応/解除
+    if ($(this).css('outline') === 'rgb(0, 0, 255) solid 1px') {
+      $(this).css('outline', '');
+    } else {
+      $(this).css('outline', '1px solid blue');
+    }
+
+    //選択ボタンのデータ属性に値を設定
+    var selectImgId = $(this).attr('data-image-id');
+    var modalNumber = $(this).attr('data-modal-number');
+    var selectBtn = $("#selectImg".concat(modalNumber));
+    var selectedImgId = selectBtn.attr('data-selected-id');
+    if (selectedImgId === '' && selectImgId !== selectedImgId) {
+      selectBtn.attr('data-selected-id', selectImgId);
+    } else if (selectImgId === selectedImgId) {
+      selectBtn.attr('data-selected-id', '');
+    } else {
+      //既に他の画像が選択されている場合 outline css解除してから値を設定
+      $('.select-image').filter(function () {
+        return $(this).attr('data-image-id') === selectedImgId;
+      }).css('outline', '');
+      selectBtn.attr('data-selected-id', selectImgId);
+    }
+  });
+
+  //選択ボタン
+  $('.select-btn').on('click', function () {
+    var selectedId = $(this).attr('data-selected-id');
+    var modalId = $(this).attr('data-modal-id');
+
+    //各inputタグのvalueに値を設定
+    if (modalId === 'First') {
+      $('#image_first').val(selectedId);
+    } else if (modalId === 'Second') {
+      $('#image_second').val(selectedId);
+    } else if (modalId === 'Third') {
+      $('#image_third').val(selectedId);
+    } else {
+      $('#image_fourth').val(selectedId);
+    }
   });
 });
 

@@ -73,3 +73,27 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('owner.dashboard');
 })->middleware(['auth:owners'])->name('dashboard');
+
+Route::prefix('shop')->middleware('auth:owners')->group(function () {
+    Route::get('index', \App\Http\Actions\Owner\Shop\ShopIndexAction::class)->name('shop.index');
+    Route::get('edit/{id}', \App\Http\Actions\Owner\Shop\ShopEditAction::class)->name('shop.edit');
+    Route::post('update', \App\Http\Actions\Owner\Shop\ShopUpdateAction::class)->name('shop.update');
+});
+
+Route::prefix('image')->middleware('auth:owners')->group(function () {
+    Route::get('index', App\Http\Actions\Owner\Image\ImageIndexAction::class)->name('image.index');
+    Route::get('create', App\Http\Actions\Owner\Image\ImageCreateAction::class)->name('image.create');
+    Route::get('edit/{id}', App\Http\Actions\Owner\Image\ImageEditAction::class)->name('image.edit');
+    Route::post('update', App\Http\Actions\Owner\Image\ImageUpdateAction::class)->name('image.update');
+    Route::post('store', App\Http\Actions\Owner\Image\ImageStoreAction::class)->name('image.store');
+    Route::post('destroy', App\Http\Actions\Owner\Image\ImageDestroyAction::class)->name('image.destroy');
+});
+
+Route::prefix('product')->middleware('auth:owners')->group(function () {
+    Route::get('index', App\Http\Actions\Owner\Product\ProductIndexAction::class)->name('product.index');
+    Route::get('create', App\Http\Actions\Owner\Product\ProductCreateAction::class)->name('product.create');
+    Route::get('edit/{id}', App\Http\Actions\Owner\Product\ProductEditAction::class)->name('product.edit');
+    Route::post('update', App\Http\Actions\Owner\Product\ProductUpdateAction::class)->name('product.update');
+    Route::post('store', App\Http\Actions\Owner\Product\ProductStoreAction::class)->name('product.store');
+    Route::post('destroy', App\Http\Actions\Owner\Product\ProductDestroyAction::class)->name('product.destroy');
+});
