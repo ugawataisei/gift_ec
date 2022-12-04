@@ -3,24 +3,15 @@
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\Image;
+use App\Consts\StockConst;
+use App\Consts\CommonConst;
 
 /** @var Product $model */
 /** @var Stock $stock */
 /** @var Image $images */
 /** @var array $selectIsSelling */
 /** @var array $selectCategoryList */
-
-$selectIsSelling = [
-    '販売停止',
-    '販売中',
-];
-$selectStockAction = [
-    '出庫',
-    '入庫',
-];
 ?>
-
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -42,7 +33,7 @@ $selectStockAction = [
                     {{ Form::hidden('shop_id', $model->shop_id) }}
                     <div class="mb-6">
                         {{ Form::label('is_selling', '販売状況', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']) }}
-                        {{ Form::select('is_selling', $selectIsSelling, null, [ 'placeholder'=>'選択してください', "class" => "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"]) }}
+                        {{ Form::select('is_selling', CommonConst::SELLING_OPTION, null, [ 'placeholder'=>'選択してください', "class" => "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"]) }}
                     </div>
                     <div class="mb-6">
                         {{ Form::label('secondary_category_id', 'カテゴリー選択', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']) }}
@@ -96,13 +87,17 @@ $selectStockAction = [
                     <div
                         class="block p-6 bg-blue-300 border border-gray-200 rounded-lg shadow-md hover:bg-blue-200 mb-6">
                         <div class="mb-6">
+                            {{ Form::label('current_quantity', '在庫数', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
+                            {{ Form::number('current_quantity', $currentQuantity, ['class'=>'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light']) }}
+                        </div>
+                        <div class="mb-6">
                             {{ Form::label('type', '在庫操作', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']) }}
-                            {{ Form::select('type', $selectStockAction, null, [ 'placeholder'=>'選択してください', "class" => "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"]) }}
+                            {{ Form::select('type', StockConst::STOCK_OPTION, null, [ 'placeholder'=>'選択してください', "class" => "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"]) }}
                         </div>
                         <div class="mb-6">
                             {{ Form::label('quantity', '数量選択', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
                             <span class="font-medium text-red-700 text-sm">※数量は0~99の間で設定してください</span>
-                            {{ Form::number('quantity', $stock->quantity, ['class'=>'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light']) }}
+                            {{ Form::number('quantity', 0, ['class'=>'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light']) }}
                         </div>
                     </div>
                     <button type="button" onclick="location.href='{{ route('owner.product.index') }}'"

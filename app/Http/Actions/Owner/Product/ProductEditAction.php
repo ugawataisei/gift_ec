@@ -7,6 +7,9 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\SecondaryCategory;
 use App\Models\Stock;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,12 +20,18 @@ class ProductEditAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(Request $request, int $id)
+    /**
+     *
+     * @param Request $request
+     * @param int $id
+     * @return View|RedirectResponse
+     */
+    public function __invoke(Request $request, int $id): View|RedirectResponse
     {
+        /** @var Product $model */
         $query = Product::query();
         $query->where('id', $id);
         $model = $query->first();
-
         if ($model === null) {
             return redirect()->route('owner.product.index')
                 ->with([
@@ -31,21 +40,30 @@ class ProductEditAction extends Controller
                 ]);
         }
 
+        /** @var array $selectCategoryList */
         $query = SecondaryCategory::query();
         $query->select('id', 'name');
         $selectCategoryList = $query->get()
             ->pluck('name', 'id')
             ->toArray();
 
+        /** @var integer $currentQuantity */
         $query = Stock::query();
         $query->where('product_id', $id);
-        $stock = $query->first();
+        $currentQuantity = (int)$query->sum('quantity');
 
+        /** @var Collection $images */
         $query = Image::query();
         $query->where('owner_id', Auth::id());
         $images = $query->get();
 
-        return view('owner.product.edit', compact('model', 'selectCategoryList', 'stock', 'images'));
+        return view('owner.product.edit',
+            compact(
+                'model',
+                'selectCategoryList',
+                'currentQuantity',
+                'images'
+            ));
     }
 }
 

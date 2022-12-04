@@ -5,10 +5,12 @@ namespace App\Http\Actions\Owner\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Image\ImageStoreRequest;
 use App\Models\Image;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use InterventionImage;
+use Throwable;
 
 class ProductStoreAction extends Controller
 {
@@ -17,12 +19,17 @@ class ProductStoreAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(ImageStoreRequest $request)
+    /**
+     *
+     * @param ImageStoreRequest $request
+     * @return RedirectResponse
+     * @throws Throwable
+     */
+    public function __invoke(ImageStoreRequest $request): RedirectResponse
     {
         if ($request->file()['files']) {
             try {
                 DB::transaction(function () use ($request) {
-
                     //画像のDB保存前処理
                     foreach ($request->file()['files'] as $image) {
                         $resizedImage = InterventionImage::make($image['images'])
