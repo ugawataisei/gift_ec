@@ -37,6 +37,7 @@ class ProductUpdateAction extends Controller
                     return false;
                 }
                 $model->fill([
+                    'shop_id' => $request->get('shop_id'),
                     'secondary_category_id' => $request->get('secondary_category_id'),
                     'image_first' => $request->get('image_first'),
                     'image_second' => $request->get('image_second'),

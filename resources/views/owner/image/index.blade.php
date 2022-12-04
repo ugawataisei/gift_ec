@@ -50,7 +50,6 @@ use App\Models\Image;
                             </div>
                         @endforeach
                     </div>
-
                 </div>
                 {{ $models->links() }}
             </div>

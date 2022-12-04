@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Image;
-
-/** @var Image $images */
+use Illuminate\Database\Eloquent\Collection;
+/** @var Collection $images */
 ?>
 
 @props([

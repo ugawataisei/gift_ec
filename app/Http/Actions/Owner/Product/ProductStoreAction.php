@@ -3,13 +3,12 @@
 namespace App\Http\Actions\Owner\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Owner\Image\ImageStoreRequest;
-use App\Models\Image;
+use App\Http\Requests\Owner\Product\ProductStoreRequest;
+use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use InterventionImage;
 use Throwable;
 
 class ProductStoreAction extends Controller
@@ -21,41 +20,45 @@ class ProductStoreAction extends Controller
 
     /**
      *
-     * @param ImageStoreRequest $request
+     * @param ProductStoreRequest $request
      * @return RedirectResponse
      * @throws Throwable
      */
-    public function __invoke(ImageStoreRequest $request): RedirectResponse
+    public function __invoke(ProductStoreRequest $request): RedirectResponse
     {
-        if ($request->file()['files']) {
-            try {
-                DB::transaction(function () use ($request) {
-                    foreach ($request->file()['files'] as $image) {
-                        $resizedImage = InterventionImage::make($image['images'])
-                            ->resize(1920, 1080)
-                            ->encode();
-                        $fileName = uniqid(rand() . '_');
-                        $extension = $image['images']->extension();
-                        $fileNameToStore = $fileName . '.' . $extension;
-                        Storage::put('public/images/products/' . $fileNameToStore, $resizedImage);
+        try {
+            DB::transaction(function () use ($request) {
+                $query = Product::query();
+                /** @var Product $model */
+                $model = $query->create([
+                    'shop_id' => $request->get('shop_id'),
+                    'secondary_category_id' => $request->get('secondary_category_id'),
+                    'image_first' => $request->get('image_first'),
+                    'image_second' => $request->get('image_second'),
+                    'image_third' => $request->get('image_third'),
+                    'image_fourth' => $request->get('image_fourth'),
+                    'name' => $request->get('name'),
+                    'information' => $request->get('information'),
+                    'price' => $request->get('price'),
+                    'is_selling' => $request->get('is_selling'),
+                    'sort_order' => $request->get('sort_order') ?? 1,
+                ]);
 
-                        $query = Image::query();
-                        $query->create([
-                            'owner_id' => auth()->id(),
-                            'title' => $request->get('title') ?? null,
-                            'file_name' => $fileNameToStore,
-                        ]);
-                    }
-                });
-            } catch (\Throwable $error) {
-                Log::error($error);
-                throw $error;
-            }
+                $query = Stock::query();
+                $query->create([
+                    'product_id' => $model->id,
+                    'type' => $request->get('type'),
+                    'quantity' => (int)$request->get('quantity'),
+                ]);
+            });
+        } catch (Throwable $error) {
+            Log::error($error);
+            throw $error;
         }
 
-        return redirect('owner/image/index')->with([
+        return redirect('owner/product/index')->with([
             'status' => 'info',
-            'message' => '商品画像の登録が完了しました',
+            'message' => '商品登録が完了しました',
         ]);
     }
 }
