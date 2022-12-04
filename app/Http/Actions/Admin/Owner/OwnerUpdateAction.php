@@ -3,7 +3,7 @@
 namespace App\Http\Actions\Admin\Owner;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\OwnerUpdateRequest;
+use App\Http\Requests\Admin\Owner\OwnerUpdateRequest;
 use App\Models\Owner;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;

@@ -3,7 +3,7 @@
 namespace App\Http\Actions\Owner\Product;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
+use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,8 +23,8 @@ class ProductDestroyAction extends Controller
      */
     public function __invoke(Request $request): JsonResponse
     {
-        /** @var Image $model */
-        $query = Image::query();
+        /** @var Product $model */
+        $query = Product::query();
         $query->where('id', $request->get('id'));
         $model = $query->first();
         if ($model === null) {
@@ -33,16 +33,11 @@ class ProductDestroyAction extends Controller
                 'message' => '削除対象のデータが存在しません',
             ]);
         }
-        DB::transaction(function () use ($model) {
-            if (Storage::exists('public/images/products/' . $model->file_name)) {
-                Storage::delete('public/images/products/' . $model->file_name);
-                $model->delete();
-            }
-        });
+        $model->delete();
 
         return response()->json([
             'success' => true,
-            'message' => '登録画像を削除しました',
+            'message' => '登録商品を削除しました',
             'data' => [
                 'id' => $request->get('id'),
             ]

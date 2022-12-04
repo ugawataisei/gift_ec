@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Owner;
+namespace App\Http\Requests\Admin\Owner;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShopUpdateRequest extends FormRequest
+class OwnerUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,10 @@ class ShopUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric',
             'name' => 'required|string|',
-            'information' => 'nullable|string|',
-            'image' => 'nullable|mimes:jpg,bmp,png|',
-            'is_selling' => 'required|numeric',
+            'email' => 'required|string|email|',
+            'password' => 'required|string|',
+            'password_confirmation' => 'required|string|',
         ];
     }
 }
-

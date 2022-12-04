@@ -3,7 +3,7 @@
 namespace App\Http\Actions\Owner\Image;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Image\ImageStoreRequest;
+use App\Http\Requests\Owner\Image\ImageStoreRequest;
 use App\Models\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;

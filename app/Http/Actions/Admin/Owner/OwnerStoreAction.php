@@ -3,7 +3,7 @@
 namespace App\Http\Actions\Admin\Owner;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\OwnerStoreRequest;
+use App\Http\Requests\Admin\Owner\OwnerStoreRequest;
 use App\Models\Owner;
 use App\Models\Shop;
 use Illuminate\Http\RedirectResponse;

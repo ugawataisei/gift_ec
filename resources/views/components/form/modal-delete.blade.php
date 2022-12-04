@@ -4,15 +4,14 @@ use App\Models\Owner;
 use App\Models\Image;
 use App\Models\Product;
 
-$formId = 'delete-' . $model->id;
-
-//urlによってフォーム内容変更
 if (strpos(url()->current(), 'expired')) {
     /** @var Owner $model */
     //modal
     $headerTitle = 'オーナー削除';
     $bodyContent = '削除対象オーナー：' . $model->name . '様';
     //route
+    $prefix = 'owner-';
+    $formId = 'delete-' . $model->id;
     $formRoute = 'admin.expired-owner.destroy';
 } elseif (strpos(url()->current(), 'image')) {
     /** @var Image $model */
@@ -20,6 +19,8 @@ if (strpos(url()->current(), 'expired')) {
     $headerTitle = '画像削除';
     $bodyContent = '削除対象画像：' . $model->title;
     //route
+    $prefix = 'image-';
+    $formId = 'delete-' . $model->id;
     $formRoute = 'owner.image.destroy';
 } elseif (strpos(url()->current(), 'product')) {
     /** @var Product $model */
@@ -27,6 +28,8 @@ if (strpos(url()->current(), 'expired')) {
     $headerTitle = '商品削除';
     $bodyContent = '削除対象商品：' . $model->name;
     //route
+    $prefix = 'product-';
+    $formId = 'delete-' . $model->id;
     $formRoute = 'owner.product.destroy';
 } else {
     /** @var Owner $model */
@@ -34,6 +37,8 @@ if (strpos(url()->current(), 'expired')) {
     $headerTitle = 'オーナー削除';
     $bodyContent = '削除対象オーナー：' . $model->name . '様';
     //route
+    $prefix = 'owner-';
+    $formId = 'delete-' . $model->id;
     $formRoute = 'admin.owner.destroy';
 }
 ?>
@@ -79,11 +84,11 @@ if (strpos(url()->current(), 'expired')) {
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                {{ Form::open([ 'id' => $formId . 'ModalForm', 'route' => $formRoute, 'method' => 'post']) }}
+                {{ Form::open([ 'id' =>  $prefix . $formId . 'ModalForm', 'route' => $formRoute, 'method' => 'post']) }}
                 @csrf
                 {{ Form::hidden('id', $model->id) }}
-                <button data-modal-toggle="delete{{ $model->id }}Modal" type="submit" data-form-id="{{ $formId }}"
-                        class="delete-owner-submit text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none
+                <button data-modal-toggle="delete{{ $model->id }}Modal" type="submit" data-form-id="{{ $formId }}" data-form-prefix="{{ $prefix }}"
+                        class="delete-modal-submit text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none
                         focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg
                         text-sm px-4 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-trash"></i>削除する
                 </button>

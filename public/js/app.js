@@ -8355,13 +8355,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 $(function () {
   'use strict';
 
-  $('.delete-owner-submit').on('click', function (event) {
+  $('.delete-modal-submit').on('click', function (event) {
+    var $prefix = $(this).attr('data-form-prefix');
     var $formId = $(this).attr('data-form-id');
-    var $elForm = $("#\n        ".concat($formId, "ModalForm"));
+    var $elForm = $("#".concat($prefix).concat($formId, "ModalForm"));
     var $formRoute = $elForm.attr('action');
     var formData = new FormData($elForm.get(0));
     event.preventDefault();
-    $(".ajax-error-\n\n        ".concat($formId)).html('');
+    $(".ajax-error-".concat($formId)).html('');
     $.ajax({
       type: 'POST',
       url: $formRoute,
@@ -8394,7 +8395,7 @@ $(function () {
       error: function error(res) {
         var messages = res.responseJSON.message;
         for (var key in messages) {
-          var $elError = $(".ajax-error-\n\n                    ".concat($formId));
+          var $elError = $(".ajax-error-".concat($formId));
           $elError.html(messages[key]);
         }
       }

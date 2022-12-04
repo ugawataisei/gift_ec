@@ -2,11 +2,11 @@
 
 namespace App\Http\Actions\Owner\Product;
 
+use App\Consts\StockConst;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\ProductUpdateRequest;
+use App\Http\Requests\Owner\Product\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\Stock;
-use App\Consts\StockConst;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;

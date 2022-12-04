@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Image;
+namespace App\Http\Requests\Admin\Owner;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ImageStoreRequest extends FormRequest
+class OwnerStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class ImageStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'owner_id' => 'required|numeric',
-            'title' => 'nullable|string|',
-            'files.*.images' => 'required|mimes:jpg,bmp,png|',
+            'name' => 'required|string|',
+            'email' => 'required|string|email|',
+            'password' => 'required|string|',
+            'password_confirmation' => 'required|string|',
         ];
     }
 }

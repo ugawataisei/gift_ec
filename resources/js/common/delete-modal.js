@@ -1,17 +1,16 @@
 $(function () {
     'use strict';
-    $('.delete-owner-submit').on('click', function (event) {
+    $('.delete-modal-submit').on('click', function (event) {
 
+        const $prefix = $(this).attr('data-form-prefix');
         const $formId = $(this).attr('data-form-id');
-        const $elForm = $(`#
-        ${$formId}ModalForm`);
+        const $elForm = $(`#${$prefix}${$formId}ModalForm`);
         const $formRoute = $elForm.attr('action');
         const formData = new FormData($elForm.get(0));
 
         event.preventDefault();
-        $(`.ajax-error-
+        $(`.ajax-error-${$formId}`).html('');
 
-        ${$formId}`).html('');
         $.ajax({
             type: 'POST',
             url: $formRoute,
@@ -47,9 +46,7 @@ $(function () {
             error: function (res) {
                 const messages = res.responseJSON.message;
                 for (let key in messages) {
-                    let $elError = $(`.ajax-error-
-
-                    ${$formId}`);
+                    let $elError = $(`.ajax-error-${$formId}`);
                     $elError.html(messages[key]);
                 }
             },
