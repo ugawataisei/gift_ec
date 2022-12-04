@@ -40,6 +40,31 @@ class ImageSeeder extends Seeder
                 'file_name' => 'sample5.jpg',
                 'title' => '商品5',
             ],
+            [
+                'owner_id' => 1,
+                'file_name' => 'sample6.jpg',
+                'title' => '商品6',
+            ],
+            [
+                'owner_id' => 1,
+                'file_name' => 'sample7.jpg',
+                'title' => '商品7',
+            ],
+            [
+                'owner_id' => 1,
+                'file_name' => 'sample8.jpg',
+                'title' => '商品8',
+            ],
+            [
+                'owner_id' => 1,
+                'file_name' => 'sample9.jpg',
+                'title' => '商品9',
+            ],
+            [
+                'owner_id' => 1,
+                'file_name' => 'sample10.jpg',
+                'title' => '商品10',
+            ],
         ]);
     }
 }
