@@ -29,14 +29,14 @@ class ProductUpdateAction extends Controller
     {
         try {
             DB::transaction(function () use ($request) {
+                /** @var Product $model */
                 $query = Product::query();
                 $query->where('id', $request->get('id'));
                 $model = $query->first();
-
                 if ($model === null) {
                     return false;
                 }
-                $model->update([
+                $model->fill([
                     'secondary_category_id' => $request->get('secondary_category_id'),
                     'image_first' => $request->get('image_first'),
                     'image_second' => $request->get('image_second'),
@@ -48,6 +48,7 @@ class ProductUpdateAction extends Controller
                     'is_selling' => $request->get('is_selling'),
                     'sort_order' => $request->get('sort_order') ?? 1,
                 ]);
+                $model->save();
 
                 /** @var Stock $model */
                 $query = Stock::query();
