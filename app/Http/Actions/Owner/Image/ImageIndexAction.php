@@ -4,6 +4,7 @@ namespace App\Http\Actions\Owner\Image;
 
 use App\Http\Controllers\Controller;
 use App\Models\Image;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +15,12 @@ class ImageIndexAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(Request $request)
+    /**
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function __invoke(Request $request): View
     {
         $loginOwnerId = Auth::id();
 

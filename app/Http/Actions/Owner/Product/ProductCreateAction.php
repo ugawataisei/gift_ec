@@ -3,6 +3,7 @@
 namespace App\Http\Actions\Owner\Product;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ProductCreateAction extends Controller
@@ -12,7 +13,12 @@ class ProductCreateAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(Request $request)
+    /**
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function __invoke(Request $request): View
     {
         return view('owner.image.create');
     }

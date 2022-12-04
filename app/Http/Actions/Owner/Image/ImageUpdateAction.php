@@ -3,8 +3,10 @@
 namespace App\Http\Actions\Owner\Image;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Image\ImageStoreRequest;
 use App\Http\Requests\Image\ImageUpdateRequest;
 use App\Models\Image;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use InterventionImage;
@@ -16,12 +18,17 @@ class ImageUpdateAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(ImageUpdateRequest $request)
+    /**
+     *
+     * @param ImageUpdateRequest $request
+     * @return RedirectResponse
+     */
+    public function __invoke(ImageUpdateRequest $request): RedirectResponse
     {
+        /** @var Image $model */
         $query = Image::query();
         $query->where('id', $request->get('id'));
         $model = $query->first();
-
         if ($model === null) {
             return redirect('owner/image/edit/' . $request->get('id'))
                 ->with([
@@ -30,22 +37,18 @@ class ImageUpdateAction extends Controller
                 ]);
         }
 
-        $deleteFileName = $model->file_name;
         DB::transaction(function () use ($request, $model, $deleteFileName) {
-
-            //画像のリサイズ
             $resizedImage = InterventionImage::make($request->file()['file'])
                 ->resize(1920, 1080)
                 ->encode();
-
             $fileName = uniqid(rand() . '_');
             $extension = $request->file()['file']->extension();
             $fileNameToStore = $fileName . '.' . $extension;
 
             Storage::put('public/images/products/' . $fileNameToStore, $resizedImage);
-            Storage::delete('public/images/products/' . $deleteFileName);
-
-            //データベース更新
+            if (Storage::exists('public/images/products/' . $model->file_name)){
+                Storage::delete('public/images/products/' . $model->file_name);
+            }
             $model->update(
                 [
                     'owner_id' => $request->get('owner_id'),

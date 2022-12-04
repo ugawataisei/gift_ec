@@ -16,22 +16,28 @@ class ImageDestroyAction extends Controller
         $this->middleware('auth:owners');
     }
 
+    /**
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function __invoke(Request $request): JsonResponse
     {
+        /** @var Image $model */
         $query = Image::query();
         $query->where('id', $request->get('id'));
         $model = $query->first();
-
         if ($model === null) {
             return response()->json([
                 'error' => true,
                 'message' => '削除対象のデータが存在しません',
             ]);
         }
-
         DB::transaction(function () use ($model) {
-            Storage::delete('public/images/products/' . $model->file_name);
-            $model->delete();
+            if (Storage::exists('public/images/products/' . $model->file_name)) {
+                Storage::delete('public/images/products/' . $model->file_name);
+                $model->delete();
+            }
         });
 
         return response()->json([

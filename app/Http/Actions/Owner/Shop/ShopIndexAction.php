@@ -4,6 +4,8 @@ namespace App\Http\Actions\Owner\Shop;
 
 use App\Http\Controllers\Controller;
 use App\Models\Shop;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +16,16 @@ class ShopIndexAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(Request $request)
+    /**
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function __invoke(Request $request): View
     {
-        $loginOwnerId = Auth::id();
-
-        //将来的に複数の店舗を経営する使用になる為 get()で取得
+        /** @var Collection $models */
         $query = Shop::query();
-        $query->where('owner_id', $loginOwnerId);
+        $query->where('owner_id', Auth::id());
         $models = $query->get();
 
         return view('owner.shop.index', compact('models'));

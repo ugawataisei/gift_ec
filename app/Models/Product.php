@@ -5,8 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property int $shop_id
+ * @property int $secondary_category_id
+ * @property int $image_first
+ * @property int $image_second
+ * @property int $image_third
+ * @property int $image_fourth
+ * @property string $name
+ * @property string $information
+ * @property int $price
+ * @property bool $is_selling
+ * @property int $sort_order
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ *
+ * @property Shop|null $shop
+ * @property SecondaryCategory|null $secondary_category
+ * @property Image|null $image_first_relation
+ * @property Image|null $image_second_relation
+ * @property Image|null $image_third_relation
+ * @property Image|null $image_fourth_relation
+ */
 class Product extends Model
 {
     use HasFactory;

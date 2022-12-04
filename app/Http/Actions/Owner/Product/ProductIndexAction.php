@@ -4,6 +4,9 @@ namespace App\Http\Actions\Owner\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Shop;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +17,19 @@ class ProductIndexAction extends Controller
         $this->middleware('auth:owners');
     }
 
-    public function __invoke(Request $request)
+    /**
+     *
+     * @param Request $request
+     * @return View|RedirectResponse
+     */
+    public function __invoke(Request $request): View|RedirectResponse
     {
+        /** @var Shop $model */
         $query = Shop::query();
         $query->where('owner_id', Auth::id());
-        $shop = $query->first();
-
-        $models = $shop->products;
+        $model = $query->first();
+        /** @var Collection $models */
+        $models = $model->products;
 
         if ($models === null) {
             return redirect()->route('owner.shop.index')->with([

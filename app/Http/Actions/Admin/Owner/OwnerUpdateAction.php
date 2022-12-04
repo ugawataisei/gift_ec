@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Actions\Admin;
+namespace App\Http\Actions\Admin\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\OwnerUpdateRequest;
 use App\Models\Owner;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 
 class OwnerUpdateAction extends Controller
@@ -14,12 +15,16 @@ class OwnerUpdateAction extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function __invoke(OwnerUpdateRequest $request)
+    /**
+     *
+     * @param OwnerUpdateRequest $request
+     * @return RedirectResponse
+     */
+    public function __invoke(OwnerUpdateRequest $request): RedirectResponse
     {
         $query = Owner::query();
         $query->findOrFail($request->get('id'));
         $model = $query->first();
-
         $model->update([
             'name' => $request->get('name'),
             'email' => $request->get('email'),

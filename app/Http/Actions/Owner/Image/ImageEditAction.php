@@ -4,6 +4,7 @@ namespace App\Http\Actions\Owner\Image;
 
 use App\Http\Controllers\Controller;
 use App\Models\Image;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,22 +14,17 @@ class ImageEditAction extends Controller
     {
         //todo: 認証サービスに切り分ける
         $this->middleware('auth:owners');
-
-        //他の商品画像を閲覧できないようにリクエストパラメータと比較
         $this->middleware(function ($request, $next) {
-            $loginOwnerId = Auth::id();
             $requestShopId = $request->route()->parameters()['id'];
-
+            /** @var Image $model */
             $query = Image::query();
             $query->findOrFail((int)$requestShopId);
             $model = $query->first();
-
             if ($model === null) {
                 abort(404);
             }
 
-            $ownerId = $model->owner_id;
-            if ($loginOwnerId === $ownerId) {
+            if (Auth::id() === $model->owner_id) {
                 return $next($request);
             } else {
                 abort(404);
@@ -36,8 +32,15 @@ class ImageEditAction extends Controller
         });
     }
 
-    public function __invoke(Request $request, int $id)
+    /**
+     *
+     * @param Request $request
+     * @param int $id
+     * @return View
+     */
+    public function __invoke(Request $request, int $id): View
     {
+        /** @var Image $model */
         $query = Image::query();
         $query->where('id', $id);
         $model = $query->first();

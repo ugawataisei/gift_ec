@@ -5,7 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property int $owner_id
+ * @property string $file_name
+ * @property string $title
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ *
+ * @property Owner|null $owner
+ */
 class Image extends Model
 {
     use HasFactory;

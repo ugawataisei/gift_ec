@@ -30,19 +30,15 @@ class ProductStoreAction extends Controller
         if ($request->file()['files']) {
             try {
                 DB::transaction(function () use ($request) {
-                    //画像のDB保存前処理
                     foreach ($request->file()['files'] as $image) {
                         $resizedImage = InterventionImage::make($image['images'])
                             ->resize(1920, 1080)
                             ->encode();
-
                         $fileName = uniqid(rand() . '_');
                         $extension = $image['images']->extension();
                         $fileNameToStore = $fileName . '.' . $extension;
-
                         Storage::put('public/images/products/' . $fileNameToStore, $resizedImage);
 
-                        //DB保存
                         $query = Image::query();
                         $query->create([
                             'owner_id' => auth()->id(),
