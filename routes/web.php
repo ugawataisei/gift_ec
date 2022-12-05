@@ -21,4 +21,8 @@ Route::get('/dashboard', function () {
     return view('user.dashboard');
 })->middleware('auth:users')->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::prefix('items')->middleware('auth:users')->group(function () {
+    Route::get('index', \App\Http\Actions\User\Item\ItemIndexAction::class)->name('item.index');
+});
+
+require __DIR__ . '/auth.php';
