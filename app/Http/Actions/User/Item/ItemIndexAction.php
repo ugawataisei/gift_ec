@@ -3,7 +3,9 @@
 namespace App\Http\Actions\User\Item;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class ItemIndexAction extends Controller
@@ -20,7 +22,12 @@ class ItemIndexAction extends Controller
      */
     public function __invoke(Request $request): View
     {
-        return view('user.item.index');
+        /** @var Collection $models */
+        $query = Product::query();
+        $query->where('is_selling', 1);
+        $models = $query->get();
+
+        return view('user.item.index', compact('models'));
     }
 }
 

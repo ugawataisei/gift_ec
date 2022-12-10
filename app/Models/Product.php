@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -29,6 +30,7 @@ use Illuminate\Support\Carbon;
  * @property Image|null $image_second_relation
  * @property Image|null $image_third_relation
  * @property Image|null $image_fourth_relation
+ * @property Stock|null $stocks
  */
 class Product extends Model
 {
@@ -82,5 +84,23 @@ class Product extends Model
     public function image_fourth_relation(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'image_fourth', 'id');
+    }
+
+    public function stocks(): HasMany
+    {
+        return $this->hasMany(Stock::class);
+    }
+
+    //public function
+
+    /**
+     *
+     * @return int
+     */
+    public function getQuantity(): int
+    {
+        return Stock::query()
+            ->where('product_id', $this->id)
+            ->sum('quantity');
     }
 }
