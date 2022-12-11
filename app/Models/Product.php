@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
@@ -31,6 +32,8 @@ use Illuminate\Support\Carbon;
  * @property Image|null $image_third_relation
  * @property Image|null $image_fourth_relation
  * @property Stock|null $stocks
+ * @property User|null $users
+ *
  */
 class Product extends Model
 {
@@ -91,9 +94,21 @@ class Product extends Model
         return $this->hasMany(Stock::class);
     }
 
+    /**
+     * comment
+     *
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'carts', 'product_id', 'user_id')
+            ->withPivot('user_id', 'product_id', 'quantity');
+    }
+
     //public function
 
     /**
+     * 在庫数の合計返却
      *
      * @return int
      */
