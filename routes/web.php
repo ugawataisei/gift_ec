@@ -26,4 +26,10 @@ Route::prefix('items')->middleware('auth:users')->group(function () {
     Route::get('show/{id}', \App\Http\Actions\User\Item\ItemShowAction::class)->name('item.show');
 });
 
+Route::prefix('carts')->middleware('auth:users')->group(function () {
+    Route::get('index', \App\Http\Actions\User\Cart\CartIndexAction::class)->name('cart.index');
+    Route::post('store', \App\Http\Actions\User\Cart\CartStoreAction::class)->name('cart.store');
+    Route::post('destroy', \App\Http\Actions\User\Cart\CartDestroyAction::class)->name('cart.destroy');
+});
+
 require __DIR__ . '/auth.php';

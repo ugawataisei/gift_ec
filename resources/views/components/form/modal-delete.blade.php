@@ -3,6 +3,7 @@
 use App\Models\Owner;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\Cart;
 
 if (strpos(url()->current(), 'expired')) {
     /** @var Owner $model */
@@ -31,6 +32,15 @@ if (strpos(url()->current(), 'expired')) {
     $prefix = 'product-';
     $formId = 'delete-' . $model->id;
     $formRoute = 'owner.product.destroy';
+} elseif (strpos(url()->current(), 'cart')) {
+    /** @var Cart $model */
+    //modal
+    $headerTitle = 'カート商品削除';
+    $bodyContent = '削除対象商品：' . $model->product->name;
+    //route
+    $prefix = 'cart-';
+    $formId = 'delete-' . $model->id;
+    $formRoute = 'user.cart.destroy';
 } else {
     /** @var Owner $model */
     //modal

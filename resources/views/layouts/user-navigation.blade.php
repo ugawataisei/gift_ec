@@ -13,19 +13,26 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Dashboard') }}<i class="fa-solid fa-house ml-1"></i>
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user.item.index')" :active="request()->routeIs('user.item.index')">
-                        {{ __('商品ページ') }}
+                        {{ __('product.title') }}<i class="fa-solid fa-book ml-1"></i>
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('user.cart.index')" :active="request()->routeIs('user.cart.index')">
+                        {{ __('cart.title') }}<i class="fa-solid fa-cart-shopping ml-1"></i>
+                    </x-nav-link>
+                </div>
+
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="hidden sm:flex sm:items-center sm:ml-6"><i class="fa-regular fa-user"></i>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -72,6 +79,18 @@
             <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+        </div>
+
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+            <x-nav-link :href="route('user.item.index')" :active="request()->routeIs('user.item.index')">
+                {{ __('product.title') }}
+            </x-nav-link>
+        </div>
+
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+            <x-nav-link :href="route('user.cart.index')" :active="request()->routeIs('user.cart.index')">
+                {{ __('cart.title') }}
+            </x-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

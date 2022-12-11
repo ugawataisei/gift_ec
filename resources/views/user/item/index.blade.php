@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 /** @var Collection $models */
 /** @var Product $model */
+
 ?>
 <x-app-layout>
     <x-slot name="header">
@@ -27,12 +28,17 @@ use Illuminate\Database\Eloquent\Collection;
                                 @endif
                                 <div class="p-5">
                                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $model->name }}</h5>
+                                    <p class="leading-relaxed">{{ $model->information }}</p>
                                     <div class="flex items-center justify-between">
-                                        <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ $model->price }}</span><p class="text-sm">円（税込）</p>
+                                        <div class="flex justify-content-around align-items-center">
+                                            <div><span class="title-font font-medium text-2xl text-gray-900">{{ number_format($model->price) }}</span></div>
+                                            <div><span class="text-sm">円（税込）</span></div>
+                                        </div>
                                         <button type="button" onclick="location.href='{{ route('user.item.show', ['id' => $model->id]) }}'"
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full
                                                 text-sm px-3 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                            詳細<i class="fa-solid fa-book ml-1"></i></button>
+                                                {{ __('common.btn_label.show') }}<i class="fa-solid fa-book ml-1"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

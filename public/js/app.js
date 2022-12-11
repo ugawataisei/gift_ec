@@ -8376,7 +8376,7 @@ $(function () {
           $modal.hide();
         }
         //delete record
-        var recordId = $("#record".concat(res.data.id));
+        var recordId = $("#".concat($prefix, "record").concat(res.data.id));
         recordId.remove();
 
         //flash message alert

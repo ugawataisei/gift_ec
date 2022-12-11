@@ -24,7 +24,7 @@ $(function () {
                     $modal.hide();
                 }
                 //delete record
-                const recordId = $(`#record${res.data.id}`);
+                const recordId = $(`#${$prefix}record${res.data.id}`);
                 recordId.remove();
 
                 //flash message alert
