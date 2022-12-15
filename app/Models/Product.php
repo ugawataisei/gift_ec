@@ -33,7 +33,7 @@ use Illuminate\Support\Carbon;
  * @property Image|null $image_fourth_relation
  * @property Stock|null $stocks
  * @property User|null $users
- *
+ * @property Cart|null $pivot
  */
 class Product extends Model
 {

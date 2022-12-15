@@ -4,6 +4,9 @@ namespace App\Consts;
 
 class CommonConst
 {
+    const REDIRECT_STATUS_INFO = 'info';
+    const REDIRECT_STATUS_ALERT = 'alert';
+
     const SELLING_DISCONTINUED = 0;
     const SELLING_NOW = 1;
 

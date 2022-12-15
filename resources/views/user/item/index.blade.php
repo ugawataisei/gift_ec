@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Collection;
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <!-- Flash Messages with Session-->
+                    <x-flash-message/>
                     <div class="flex flex-wrap">
                         @foreach($models as $model)
                             <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
