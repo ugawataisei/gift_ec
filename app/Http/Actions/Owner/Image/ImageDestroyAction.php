@@ -4,16 +4,18 @@ namespace App\Http\Actions\Owner\Image;
 
 use App\Http\Controllers\Controller;
 use App\Models\Image;
+use App\Services\ImageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ImageDestroyAction extends Controller
 {
-    public function __construct()
+    protected ImageService $imageService;
+
+    public function __construct(ImageService $imageService)
     {
         $this->middleware('auth:owners');
+        $this->imageService = $imageService;
     }
 
     /**
@@ -27,22 +29,19 @@ class ImageDestroyAction extends Controller
         $query = Image::query();
         $query->where('id', $request->get('id'));
         $model = $query->first();
+
         if ($model === null) {
             return response()->json([
                 'error' => true,
-                'message' => '削除対象のデータが存在しません',
+                'message' => __('image.error_message.not_exist'),
             ]);
         }
-        DB::transaction(function () use ($model) {
-            if (Storage::exists('public/images/products/' . $model->file_name)) {
-                Storage::delete('public/images/products/' . $model->file_name);
-                $model->delete();
-            }
-        });
+
+        $this->imageService->destroyImage($model);
 
         return response()->json([
             'success' => true,
-            'message' => '登録画像を削除しました',
+            'message' => __('image.success_message.destroy'),
             'data' => [
                 'id' => $request->get('id'),
             ]

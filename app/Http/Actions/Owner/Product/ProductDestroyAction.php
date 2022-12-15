@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ProductDestroyAction extends Controller
 {
@@ -27,17 +25,18 @@ class ProductDestroyAction extends Controller
         $query = Product::query();
         $query->where('id', $request->get('id'));
         $model = $query->first();
+
         if ($model === null) {
             return response()->json([
                 'error' => true,
-                'message' => '削除対象のデータが存在しません',
+                'message' => __('product.error_message.destroy'),
             ]);
         }
         $model->delete();
 
         return response()->json([
             'success' => true,
-            'message' => '登録商品を削除しました',
+            'message' => __('product.success_message.destroy'),
             'data' => [
                 'id' => $request->get('id'),
             ]

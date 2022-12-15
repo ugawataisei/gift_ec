@@ -7,21 +7,23 @@ use App\Models\Shop;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ShopEditAction extends Controller
 {
     public function __construct()
     {
-        //todo: 認証サービスに切り分ける
         $this->middleware('auth:owners');
         $this->middleware(function ($request, $next) {
             /** @var Shop $model */
             $query = Shop::query();
             $query->findOrFail((int)$request->route()->parameters()['id']);
             $model = $query->first();
+
             if ($model === null) {
-                abort(404);
+                throw new NotFoundHttpException();
             }
+
             if (Auth::id() === $model->owner->id) {
                 return $next($request);
             } else {

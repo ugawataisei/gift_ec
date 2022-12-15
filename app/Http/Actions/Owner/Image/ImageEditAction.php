@@ -7,21 +7,21 @@ use App\Models\Image;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ImageEditAction extends Controller
 {
     public function __construct()
     {
-        //todo: 認証サービスに切り分ける
         $this->middleware('auth:owners');
         $this->middleware(function ($request, $next) {
-            $requestShopId = $request->route()->parameters()['id'];
-            /** @var Image $model */
             $query = Image::query();
-            $query->findOrFail((int)$requestShopId);
+            $query->findOrFail((int)$request->route()->parameters()['id']);
+
+            /** @var Image $model */
             $model = $query->first();
             if ($model === null) {
-                abort(404);
+                throw new NotFoundHttpException();
             }
 
             if (Auth::id() === $model->owner_id) {
@@ -40,10 +40,14 @@ class ImageEditAction extends Controller
      */
     public function __invoke(Request $request, int $id): View
     {
-        /** @var Image $model */
         $query = Image::query();
         $query->where('id', $id);
         $model = $query->first();
+
+        /** @var Image $model */
+        if ($model === null) {
+            throw new NotFoundHttpException();
+        }
 
         return view('owner.image.edit', compact('model'));
     }
