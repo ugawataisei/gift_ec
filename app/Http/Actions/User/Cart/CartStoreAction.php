@@ -2,51 +2,36 @@
 
 namespace App\Http\Actions\User\Cart;
 
+use App\Consts\CommonConst;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
+use App\Http\Requests\User\Cart\CartStoreRequest;
+use App\Services\CartService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CartStoreAction extends Controller
 {
-    public function __construct()
+    protected CartService $cartService;
+
+    public function __construct(CartService $cartService)
     {
         $this->middleware('auth:users');
+        $this->cartService = $cartService;
     }
 
     /**
      *
-     * @param Request $request
+     * @param CartStoreRequest $request
      * @return RedirectResponse
      */
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(CartStoreRequest $request): RedirectResponse
     {
-        /** @var Cart $model */
-        $model = Cart::query()
-            ->where('user_id', Auth::id())
-            ->where('product_id', $request->get('product_id'))
-            ->first();
-
-        if ($model === null) {
-            Cart::query()
-                ->create([
-                    'user_id' => Auth::id(),
-                    'product_id' => $request->get('product_id'),
-                    'quantity' => $request->get('quantity'),
-                ]);
-        } else {
-            $model->fill([
-                'quantity' => $request->get('quantity'),
-            ]);
-            $model->save();
-        }
+        $this->cartService->storeCartByRequest($request);
 
         return redirect()
             ->route('user.item.show', ['id' => $request->get('product_id')])
             ->with([
-                'status' => 'info',
-                'message' => '商品をカートに入れました。',
+                'status' => CommonConst::REDIRECT_STATUS_INFO,
+                'message' => __('cart.success_message.store'),
             ]);
     }
 }

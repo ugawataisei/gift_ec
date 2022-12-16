@@ -29,14 +29,14 @@ class CartDestroyAction extends Controller
         if ($model === null) {
             return response()->json([
                 'error' => true,
-                'message' => '削除対象のデータが存在しません',
+                'message' => __('cart.error_message.destroy'),
             ]);
         }
         $model->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'カートから商品を削除しました',
+            'message' => __('cart.success_message.destroy'),
             'data' => [
                 'id' => $request->get('id'),
             ]

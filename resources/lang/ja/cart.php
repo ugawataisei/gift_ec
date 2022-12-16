@@ -3,21 +3,19 @@
 
 return [
     'title' => 'カート',
-    'attribute' => [
+    'attribute_labels' => [
+        'id' => 'ID',
+        'user_id' => '顧客ID',
+        'product_id' => '商品ID',
         'quantity' => '数量',
+        'created_at' => '作成日',
+        'updated_at' => '更新日',
     ],
-    'view' => [
-        'price_prefix' => '円（税込）',
-        'buy_items' => '購入',
-        'total' => '合計金額'
-    ],
-    /** success message */
     'success_message' => [
-        'stripe_success' => '決済処理に成功しました。'
+        'store' => '商品をカートに入れました。',
+        'destroy' => 'カートから商品を削除しました。',
     ],
-    /** error message */
     'error_message' => [
-        'stock_error' => '在庫情報が更新されています。',
-        'stripe_cancel' => '決済処理に失敗しました。'
+        'destroy' => '削除対象のデータが存在しません',
     ],
 ];

@@ -28,7 +28,10 @@ Route::prefix('items')->middleware('auth:users')->group(function () {
 
 Route::prefix('carts')->middleware('auth:users')->group(function () {
     Route::get('index', \App\Http\Actions\User\Cart\CartIndexAction::class)->name('cart.index');
+    Route::get('success', \App\Http\Actions\User\Cart\CartSuccessAction::class)->name('cart.success');
+    Route::get('cancel', \App\Http\Actions\User\Cart\CartCancelAction::class)->name('cart.cancel');
     Route::post('store', \App\Http\Actions\User\Cart\CartStoreAction::class)->name('cart.store');
+    Route::post('checkout', \App\Http\Actions\User\Cart\CartCheckoutAction::class)->name('cart.checkout');
     Route::post('destroy', \App\Http\Actions\User\Cart\CartDestroyAction::class)->name('cart.destroy');
 });
 
