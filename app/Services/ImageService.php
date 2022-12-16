@@ -2,11 +2,10 @@
 
 namespace App\Services;
 
-use App\Consts\ImageConst;
+use App\Consts\CommonConst;
 use App\Http\Requests\Owner\Image\ImageStoreRequest;
 use App\Http\Requests\Owner\Image\ImageUpdateRequest;
 use App\Models\Image;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -104,8 +103,8 @@ class ImageService
     public function destroyImage(Image $model): void
     {
         DB::transaction(function () use ($model) {
-            if (Storage::exists(ImageConst::IMAGE_PRODUCT_PATH . $model->file_name)) {
-                Storage::delete(ImageConst::IMAGE_PRODUCT_PATH . $model->file_name);
+            if (Storage::exists(CommonConst::IMAGE_PRODUCT_PATH . $model->file_name)) {
+                Storage::delete(CommonConst::IMAGE_PRODUCT_PATH . $model->file_name);
                 $model->delete();
             }
         });

@@ -84,11 +84,11 @@ for($i = 1; $i <= $quantity; $i++) {
                                     <div class="flex justify-content-between align-items-center">
                                         <div class="flex justify-content-around align-items-center">
                                             <div><span class="title-font font-medium text-2xl text-gray-900">{{ number_format($model->price) }}</span></div>
-                                            <div><span class="text-sm">{{ __('product.view.price_prefix') }}</span></div>
+                                            <div><span class="text-sm">{{ __('cart.view.tax') }}</span></div>
                                         </div>
                                         <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300
                                                 font-medium rounded-lg text-sm px-3 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                            {{ __('product.view.cart') }}<i class="fa-solid fa-cart-shopping ml-1"></i>
+                                            {{ __('product.view.in_cart') }}<i class="fa-solid fa-cart-shopping ml-1"></i>
                                         </button>
                                     </div>
                                     {!! Form::close() !!}

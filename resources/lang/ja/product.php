@@ -2,14 +2,16 @@
 
 return [
     'title' => '商品一覧',
+    'edit_title' => '商品編集',
+    'create_title' => '商品登録',
     'attribute_labels' => [
         'id' => 'ID',
         'shop_id' => '店舗ID',
         'secondary_category_id' => '第二カテゴリーID',
-        'image_first' => '写真１',
-        'image_second' => '写真2',
-        'image_third' => '写真3',
-        'image_fourth' => '写真4',
+        'image_first' => '商品画像１',
+        'image_second' => '商品画像2',
+        'image_third' => '商品画像3',
+        'image_fourth' => '商品画像4',
         'name' => '商品名',
         'information' => '商品情報',
         'price' => '値段',
@@ -27,4 +29,10 @@ return [
     'error_message' => [
         'destroy' => '削除対象のデータが存在しません。'
     ],
+    'view' => [
+        'quantity' => '数量',
+        'in_cart' => 'カート',
+        'select_image' => '※商品画像1で設定したものがTopとして表示されます',
+        'alert_amount' => '※数量は0~99の間で設定してください',
+    ]
 ];

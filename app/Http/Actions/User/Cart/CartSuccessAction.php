@@ -2,11 +2,10 @@
 
 namespace App\Http\Actions\User\Cart;
 
+use App\Consts\CommonConst;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use App\Services\CartService;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CartSuccessAction extends Controller
@@ -22,14 +21,16 @@ class CartSuccessAction extends Controller
     /**
      *
      * @param Request $request
-     * @return View
+     * @return RedirectResponse
      */
-    public function __invoke(Request $request): View
+    public function __invoke(Request $request): RedirectResponse
     {
-        /** @var Collection|Cart $models */
-        $models = $this->cartService->returnAllProductInCart();
+        $this->cartService->successCheckout();
 
-        return view('user.cart.index', compact('models'));
+        return redirect()->route('user.item.index')->with([
+            'status' => CommonConst::REDIRECT_STATUS_INFO,
+            'message' => __('cart.success_message.checkout'),
+        ]);
     }
 }
 

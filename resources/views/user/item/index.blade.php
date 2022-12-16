@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('商品ページ') }}
+            {{ __('common.item_title') }}
         </h2>
     </x-slot>
 
@@ -34,12 +34,12 @@ use Illuminate\Database\Eloquent\Collection;
                                     <div class="flex items-center justify-between">
                                         <div class="flex justify-content-around align-items-center">
                                             <div><span class="title-font font-medium text-2xl text-gray-900">{{ number_format($model->price) }}</span></div>
-                                            <div><span class="text-sm">円（税込）</span></div>
+                                            <div><span class="text-sm">{{ __('cart.view.tax') }}</span></div>
                                         </div>
                                         <button type="button" onclick="location.href='{{ route('user.item.show', ['id' => $model->id]) }}'"
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full
                                                 text-sm px-3 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                {{ __('common.btn_label.show') }}<i class="fa-solid fa-book ml-1"></i>
+                                                {{ __('common.btn_labels.show') }}<i class="fa-solid fa-book ml-1"></i>
                                         </button>
                                     </div>
                                 </div>

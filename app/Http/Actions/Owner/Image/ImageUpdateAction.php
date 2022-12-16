@@ -3,7 +3,6 @@
 namespace App\Http\Actions\Owner\Image;
 
 use App\Consts\CommonConst;
-use App\Consts\ImageConst;
 use App\Http\Controllers\Controller;
 use App\Services\ImageService;
 use App\Http\Requests\Owner\Image\ImageUpdateRequest;
@@ -26,7 +25,7 @@ class ImageUpdateAction extends Controller
      */
     public function __invoke(ImageUpdateRequest $request): RedirectResponse
     {
-        $this->imageService->updateImageInStorage($request, ImageConst::IMAGE_PRODUCT_PATH);
+        $this->imageService->updateImageInStorage($request, CommonConst::IMAGE_PRODUCT_PATH);
 
         return redirect('owner/image/edit/' . $request->get('id'))
             ->with([

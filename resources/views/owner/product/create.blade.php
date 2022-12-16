@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('商品管理') }}
+            {{ __('product.create_title') }}
         </h2>
     </x-slot>
 
@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Collection;
                     @csrf
                     {{ Form::hidden('shop_id', $shopId) }}
                     <div class="mb-6">
-                        {{ Form::label('is_selling', '販売状況', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']) }}
+                        {{ Form::label('is_selling', __('product.attribute_labels.is_selling'), ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']) }}
                         {{ Form::select('is_selling', CommonConst::SELLING_OPTION, null, [ 'placeholder'=>'選択してください', "class" => "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"]) }}
                     </div>
                     <div class="mb-6">
@@ -33,43 +33,42 @@ use Illuminate\Database\Eloquent\Collection;
                         {{ Form::select('secondary_category_id', $selectCategoryList, null, [ 'placeholder'=>'選択してください', "class" => "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"]) }}
                     </div>
                     <div class="mb-6">
-                        {{ Form::label('name', '商品名', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
+                        {{ Form::label('name', __('product.attribute_labels.name'), ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
                         {{ Form::text('name', old('name'), ['class'=>'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light']) }}
                     </div>
                     <div class="mb-6">
-                        {{ Form::label('price', '価格', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
+                        {{ Form::label('price', __('product.attribute_labels.price'), ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
                         {{ Form::number('price', old('price'), ['class'=>'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light']) }}
                     </div>
                     <div class="mb-6">
-                        {{ Form::label('information', '商品情報', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']) }}
+                        {{ Form::label('information', __('product.attribute_labels.information'), ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']) }}
                         {{ Form::textarea('information', old('information'), ['id' => "message", "rows" => "4", 'class' => 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500']) }}
                     </div>
-                    <!-- 画像選択 -->
                     {{ Form::label('information', '商品画像選択', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']) }}
-                    <span class="font-medium text-red-700 text-sm">※商品画像1で設定したものがTopとして表示されます</span>
+                    <span class="font-medium text-red-700 text-sm">{{ __('product.view.select_image') }}</span>
                     <div class="flex flex-wrap mb-6">
                         <button
                             class="block text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mr-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             type="button" data-modal-toggle="imageFirstModal">
-                            商品画像 1<i class="fa-solid fa-image ml-1"></i>
+                            {{ __('product.attribute_labels.image_first') }}<i class="fa-solid fa-image ml-1"></i>
                         </button>
                         {{ Form::hidden('image_first', old('image_first'), ['id' => 'image_first']) }}
                         <button
                             class="block text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mr-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             type="button" data-modal-toggle="imageSecondModal">
-                            商品画像 2<i class="fa-solid fa-image ml-1"></i>
+                            {{ __('product.attribute_labels.image_first') }}<i class="fa-solid fa-image ml-1"></i>
                         </button>
                         {{ Form::hidden('image_second', old('image_second'), ['id' => 'image_second']) }}
                         <button
                             class="block text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mr-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             type="button" data-modal-toggle="imageThirdModal">
-                            商品画像 3<i class="fa-solid fa-image ml-1"></i>
+                            {{ __('product.attribute_labels.image_first') }}<i class="fa-solid fa-image ml-1"></i>
                         </button>
                         {{ Form::hidden('image_third', old('image_third'), ['id' => 'image_third']) }}
                         <button
                             class="block text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mr-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             type="button" data-modal-toggle="imageFourthModal">
-                            商品画像 4<i class="fa-solid fa-image ml-1"></i>
+                            {{ __('product.attribute_labels.image_first') }}<i class="fa-solid fa-image ml-1"></i>
                         </button>
                         {{ Form::hidden('image_fourth', old('image_fourth'), ['id' => 'image_fourth']) }}
                     </div>
@@ -84,19 +83,19 @@ use Illuminate\Database\Eloquent\Collection;
                         </div>
                         <div class="mb-6">
                             {{ Form::label('quantity', '初期仕入数', ['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300']) }}
-                            <span class="font-medium text-red-700 text-sm">※数量は0~99の間で設定してください</span>
+                            <span class="font-medium text-red-700 text-sm">{{ __('product.view.alert_amount') }}</span>
                             {{ Form::number('quantity', 0, ['class'=>'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light']) }}
                         </div>
                     </div>
                     <button type="button" onclick="location.href='{{ route('owner.product.index') }}'"
                             class="text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm
                             px-3 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                        戻る<i class="fa-solid fa-arrow-left ml-1"></i>
+                        {{ __('common.btn_labels.back') }}<i class="fa-solid fa-arrow-left ml-1"></i>
                     </button>
                     <button type="submit"
                             class="focus:outline-none text-white bg-green-500 hover:bg-green-400 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm
                             px-3 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                        更新<i class="fa-solid fa-wrench ml-1"></i>
+                        {{ __('common.btn_labels.update') }}<i class="fa-solid fa-wrench ml-1"></i>
                     </button>
                     {{ Form::close() }}
                 </div>

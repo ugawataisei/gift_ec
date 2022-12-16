@@ -13,6 +13,9 @@ class CommonConst
     const MB_SELLING_DISCONTINUED = '販売停止';
     const MB_SELLING_NOW = '販売中';
 
+    const IMAGE_SHOP_PATH = 'public/images/shops/';
+    const IMAGE_PRODUCT_PATH = 'public/images/products/';
+
     const SELLING_OPTION = [
         self::SELLING_DISCONTINUED => self::MB_SELLING_DISCONTINUED,
         self::SELLING_NOW => self::MB_SELLING_NOW,

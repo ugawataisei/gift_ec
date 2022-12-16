@@ -26,10 +26,9 @@ class CartCheckoutAction extends Controller
      */
     public function __invoke(Request $request): View
     {
-        /** @var Collection|Cart $models */
-        $models = $this->cartService->returnAllProductInCart();
+        $viewParams = $this->cartService->checkoutInCartItems();
 
-        return view('user.cart.index', compact('models'));
+        return view('user.cart.checkout', $viewParams);
     }
 }
 

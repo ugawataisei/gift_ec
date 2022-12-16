@@ -8,5 +8,8 @@ return [
         'store' => '保存',
         'show' => '詳細',
         'destroy' => '削除',
+        'back' => '戻る',
+        'register' => '登録'
     ],
+    'item_title' => '商品ページ',
 ];

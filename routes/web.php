@@ -35,10 +35,4 @@ Route::prefix('carts')->middleware('auth:users')->group(function () {
     Route::post('destroy', \App\Http\Actions\User\Cart\CartDestroyAction::class)->name('cart.destroy');
 });
 
-Route::prefix('stripe')->middleware('auth:users')->group(function () {
-    Route::get('checkout', \App\Http\Actions\User\Stripe\StripeCheckoutAction::class)->name('stripe.checkout');
-    Route::get('success', \App\Http\Actions\User\Stripe\StripeSuccessAction::class)->name('stripe.success');
-    Route::get('cancel', \App\Http\Actions\User\Stripe\StripeCancelAction::class)->name('stripe.cancel');
-});
-
 require __DIR__ . '/auth.php';

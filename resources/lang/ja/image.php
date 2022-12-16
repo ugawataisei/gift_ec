@@ -2,6 +2,8 @@
 
 return [
     'title' => '店舗画像管理',
+    'create_title' => '店舗画像登録',
+    'edit_title' => '店舗画像編集',
     'attribute_labels' => [
         'id' => 'ID',
         'owner_id' => '店舗オーナーID',
@@ -17,5 +19,5 @@ return [
     ],
     'error_message' => [
         'not_exist' => '削除対象のデータが存在しません'
-    ]
+    ],
 ];

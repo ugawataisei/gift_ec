@@ -27,19 +27,19 @@ use Illuminate\Database\Eloquent\Collection;
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="py-3 px-3">
-                                    {{ '商品名' }}
+                                    {{ __('product.attribute_labels.name') }}
                                 </th>
                                 <th scope="col" class="py-3 px-8">
-                                    {{ '写真' }}
+                                    {{ __('product.attribute_labels.image_first') }}
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    {{ '数量' }}
+                                    {{ __('cart.attribute_labels.quantity') }}
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    {{ '金額' }}
+                                    {{ __('product.attribute_labels.price') }}
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    {{ '操作' }}
+                                    {{ __('cart.view.operation') }}
                                 </th>
                             </tr>
                             </thead>
@@ -80,18 +80,18 @@ use Illuminate\Database\Eloquent\Collection;
                             <tr class="bg-gray-50 border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" class="py-4 px-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
                                 <td class="py-4 px-8"></td>
-                                <td class="py-4 px-6">{{ __('cart.view.total') }}</td>
+                                <td class="py-4 px-6">{{ __('cart.view.total_price') }}</td>
                                 <td class="py-4 px-6">
                                     <div class="flex justify-content-around align-items-center">
                                         <div><span class="title-font font-medium text-gray-900">{{ number_format(Cart::getCartPrice()) }}</span></div>
-                                        <div><span class="text-sm">{{ __('cart.view.price_prefix') }}</span></div>
+                                        <div><span class="text-sm">{{ __('cart.view.tax') }}</span></div>
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">
-                                    <button type="button" onclick="location.href='{{ route('user.stripe.checkout') }}'"
+                                    <button type="button" onclick="location.href='{{ route('user.cart.checkout') }}'"
                                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm
                                             px-3 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                            {{ __('cart.view.buy_items') }}<i class="fa-solid fa-shop ml-1"></i>
+                                            {{ __('cart.view.checkout') }}<i class="fa-solid fa-shop ml-1"></i>
                                     </button>
                                 </td>
                             </tr>

@@ -2,6 +2,7 @@
 
 return [
     'title' => '店舗画像管理',
+    'edit_title' => '店舗画像編集',
     'attribute_labels' => [
         'id' => 'ID',
         'owner_id' => '店舗オーナーID',
