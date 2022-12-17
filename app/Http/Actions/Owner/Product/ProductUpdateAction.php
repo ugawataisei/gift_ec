@@ -27,9 +27,9 @@ class ProductUpdateAction extends Controller
      */
     public function __invoke(ProductUpdateRequest $request): RedirectResponse
     {
-        $model = $this->productService->updateProduct($request);
+        $this->productService->updateProduct($request);
 
-        return redirect()->route('owner.product.edit', ['id' => $model->id])
+        return redirect()->route('owner.product.edit', ['id' => $request->get('id')])
             ->with([
                 'status' => CommonConst::REDIRECT_STATUS_INFO,
                 'message' => __('product.success_message.update'),

@@ -28,7 +28,7 @@ class ImageStoreAction extends Controller
      */
     public function __invoke(ImageStoreRequest $request): RedirectResponse
     {
-        $this->imageService->storeImageInStorage($request, ImageConst::IMAGE_PRODUCT_PATH);
+        $this->imageService->storeImageInStorage($request, CommonConst::IMAGE_PRODUCT_PATH);
 
         return redirect('owner/image/index')->with([
             'status' => CommonConst::REDIRECT_STATUS_INFO,

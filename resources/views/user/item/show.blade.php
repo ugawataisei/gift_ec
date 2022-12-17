@@ -73,6 +73,7 @@ for($i = 1; $i <= $quantity; $i++) {
                                     @csrf
                                     @method('POST')
                                     {{ Form::hidden('product_id', $model->id) }}
+                                    {{ Form::hidden('user_id', auth()->id()) }}
                                     <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                                         <div class="flex justify-content-end items-center">
                                             <span class="mr-3">{{ __('product.view.quantity') }}</span>

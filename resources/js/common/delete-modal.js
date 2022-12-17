@@ -4,12 +4,15 @@ $(function () {
 
         const $prefix = $(this).attr('data-form-prefix');
         const $formId = $(this).attr('data-form-id');
-        const $elForm = $(`#${$prefix}${$formId}ModalForm`);
+        const $elForm = $(`#
+        ${$prefix}  ${$formId}ModalForm`);
         const $formRoute = $elForm.attr('action');
         const formData = new FormData($elForm.get(0));
 
         event.preventDefault();
-        $(`.ajax-error-${$formId}`).html('');
+        $(`.ajax-error-
+
+        ${$formId}`).html('');
 
         $.ajax({
             type: 'POST',
@@ -24,7 +27,7 @@ $(function () {
                     $modal.hide();
                 }
                 //delete record
-                const recordId = $(`#${$prefix}record${res.data.id}`);
+                const recordId = $(`#record${res.data.id}`);
                 recordId.remove();
 
                 //flash message alert
@@ -46,7 +49,9 @@ $(function () {
             error: function (res) {
                 const messages = res.responseJSON.message;
                 for (let key in messages) {
-                    let $elError = $(`.ajax-error-${$formId}`);
+                    let $elError = $(`.ajax-error-
+
+                    ${$formId}`);
                     $elError.html(messages[key]);
                 }
             },

@@ -6,6 +6,7 @@ use App\Http\Requests\Owner\Shop\ShopUpdateRequest;
 use App\Models\Shop;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use InterventionImage;
 
 class ShopService
 {

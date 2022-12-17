@@ -37,9 +37,9 @@ class ItemService
         }
 
         return [
-            $model,
-            $productQuantity,
-            $model->shop
+            'model' => $model,
+            'quantity' => $productQuantity,
+            'shop' => $model->shop
         ];
     }
 }

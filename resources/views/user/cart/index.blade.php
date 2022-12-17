@@ -63,14 +63,14 @@ use Illuminate\Database\Eloquent\Collection;
                                         <td class="py-4 px-6">
                                             <div class="flex justify-content-around align-items-center">
                                                 <div><span class="title-font font-medium text-gray-900">{{ number_format($model->getTotalPrice()) }}</span></div>
-                                                <div><span class="text-sm">{{ __('cart.view.price_prefix') }}</span></div>
+                                                <div><span class="text-sm">{{ __('cart.view.tax') }}</span></div>
                                             </div>
                                         </td>
                                         <td class="py-4 px-6">
                                             <button type="button" data-modal-toggle="delete{{ $model->id }}Modal"
                                                     class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300
                                                 font-medium rounded-lg text-sm px-3 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">
-                                                {{ __('common.btn_label.destroy') }}<i class="fa-solid fa-trash ml-1"></i>
+                                                {{ __('common.btn_labels.destroy') }}<i class="fa-solid fa-trash ml-1"></i>
                                             </button>
                                         </td>
                                         <x-form.modal-delete :model="$model" />

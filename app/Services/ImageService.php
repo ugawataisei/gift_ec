@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use InterventionImage;
 
 class ImageService
 {

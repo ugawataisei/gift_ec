@@ -124,8 +124,8 @@ class CartService
                 ]);
 
                 return [
-                    $publicKey,
-                    $session,
+                    'publicKey' => $publicKey,
+                    'session' => $session,
                 ];
             });
         } catch (Exception $e) {

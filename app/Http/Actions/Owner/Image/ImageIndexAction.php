@@ -25,6 +25,7 @@ class ImageIndexAction extends Controller
     {
         $query = Image::query();
         $query->where('owner_id', Auth::id());
+        $query->whereNull('deleted_at');
         /** @var Collection|Image $models */
         $models = $query->paginate(10);
 

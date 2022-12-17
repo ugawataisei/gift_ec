@@ -45,9 +45,9 @@ class ProductService
         $shopId = $model->shop->id;
 
         return [
-            $selectCategoryList,
-            $images,
-            $shopId,
+            'selectCategoryList' => $selectCategoryList,
+            'images' => $images,
+            'shopId' => $shopId,
         ];
     }
 
@@ -84,13 +84,14 @@ class ProductService
         /** @var Collection $images */
         $query = Image::query();
         $query->where('owner_id', Auth::id());
+        $query->whereNull('deleted_at');
         $images = $query->get();
 
         return [
-            $model,
-            $selectCategoryList,
-            $currentQuantity,
-            $images
+            'model' => $model,
+            'selectCategoryList' => $selectCategoryList,
+            'currentQuantity' => $currentQuantity,
+            'images' => $images
         ];
     }
 
@@ -139,10 +140,10 @@ class ProductService
      * 受け取ったリクエストデータからProduct更新
      *
      * @param ProductUpdateRequest $request
-     * @return Product|array
+     * @return void
      * @throws Throwable
      */
-    public function updateProduct(ProductUpdateRequest $request): Product|array
+    public function updateProduct(ProductUpdateRequest $request): void
     {
         try {
             DB::transaction(function () use ($request) {
@@ -175,7 +176,7 @@ class ProductService
                 $query->where('product_id', $request->get('id'));
 
                 $quantity = (int)$query->sum('quantity');
-                if ($quantity !== (int)$request->get('quantity')) {
+                if ($quantity !== (int)$request->get('current_quantity')) {
                     throw new \Exception(__('product.success_message.stock'));
                 }
 
@@ -194,6 +195,5 @@ class ProductService
             Log::error($error);
             throw $error;
         }
-        return [];
     }
 }
