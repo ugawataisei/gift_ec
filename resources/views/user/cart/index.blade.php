@@ -77,24 +77,32 @@ use Illuminate\Database\Eloquent\Collection;
                                     </tr>
                                 </div>
                             @endforeach
-                            <tr class="bg-gray-50 border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="py-4 px-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
-                                <td class="py-4 px-8"></td>
-                                <td class="py-4 px-6">{{ __('cart.view.total_price') }}</td>
-                                <td class="py-4 px-6">
-                                    <div class="flex justify-content-around align-items-center">
-                                        <div><span class="title-font font-medium text-gray-900">{{ number_format(Cart::getCartPrice()) }}</span></div>
-                                        <div><span class="text-sm">{{ __('cart.view.tax') }}</span></div>
-                                    </div>
-                                </td>
-                                <td class="py-4 px-6">
-                                    <button type="button" onclick="location.href='{{ route('user.cart.checkout') }}'"
-                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm
+                            @if ($models->toArray() !== [])
+                                <tr class="bg-gray-50 border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row" class="py-4 px-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
+                                    <td class="py-4 px-8"></td>
+                                    <td class="py-4 px-6">{{ __('cart.view.total_price') }}</td>
+                                    <td class="py-4 px-6">
+                                        <div class="flex justify-content-around align-items-center">
+                                            <div><span class="title-font font-medium text-gray-900">{{ number_format(Cart::getCartPrice()) }}</span></div>
+                                            <div><span class="text-sm">{{ __('cart.view.tax') }}</span></div>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <button type="button" onclick="location.href='{{ route('user.cart.checkout') }}'"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm
                                             px-3 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                            {{ __('cart.view.checkout') }}<i class="fa-solid fa-shop ml-1"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                                            {{ __('cart.view.checkout') }}<i class="fa-brands fa-cc-stripe ml-1"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr class="bg-gray-50 border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td class="py-4 px-8">
+                                        {{ __('cart.view.no_item_in_cart') }}
+                                    </td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>
