@@ -3,12 +3,14 @@
 namespace App\Http\Actions\Owner\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Shop;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductIndexAction extends Controller
 {
@@ -28,15 +30,13 @@ class ProductIndexAction extends Controller
         $query = Shop::query();
         $query->where('owner_id', Auth::id());
         $model = $query->first();
-        /** @var Collection $models */
-        $models = $model->products;
 
-        if ($models === null) {
-            return redirect()->route('owner.shop.index')->with([
-                'status' => 'alert',
-                'message' => '商品情報がまだ登録されていません。商品情報を登録してください。'
-            ]);
+        if ($model === null) {
+            throw new NotFoundHttpException();
         }
+
+        /** @var Collection|Product $models */
+        $models = $model->products;
 
         return view('owner.product.index', compact('models'));
     }

@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->unsignedBigInteger('owner_id');
             $table->string('file_name');
             $table->string('title')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             //外部キー制約
