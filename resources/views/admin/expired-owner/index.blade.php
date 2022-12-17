@@ -10,7 +10,7 @@ use App\Models\Owner;
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            契約切れオーナー[管理]
+            {{ __('owner.expired_title') }}
         </h2>
     </x-slot>
 
@@ -28,16 +28,16 @@ use App\Models\Owner;
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
                                             <th scope="col" class="py-3 px-6">
-                                                ID
+                                                {{ __('owner.attribute_labels.id') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-                                                お名前
+                                                {{ __('owner.attribute_labels.name') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-                                                メールアドレス
+                                                {{ __('owner.attribute_labels.email') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-                                                契約解除日
+                                                {{ __('owner.view.contract_cancellation_date') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
 
@@ -63,7 +63,7 @@ use App\Models\Owner;
                                                     <button type="button" data-modal-toggle="delete{{ $model->id }}Modal"
                                                             class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4
                                                             focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80
-                                                            font-medium rounded-lg text-sm  px-3 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-trash"></i>完全に削除
+                                                            font-medium rounded-lg text-sm  px-3 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-trash"></i>{{ __('owner.view.destroy') }}
                                                     </button>
                                                 </td>
                                                 <x-form.modal-delete :model="$model" />

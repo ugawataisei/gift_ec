@@ -1,7 +1,10 @@
 <?php
+
+use Illuminate\Database\Eloquent\Collection;
 use App\Models\Owner;
 
-/** @var Owner $models */
+/** @var Collection $models */
+/** @var Owner $model */
 
 ?>
 
@@ -10,7 +13,7 @@ use App\Models\Owner;
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            オーナー[管理]
+            {{ __('owner.title') }}
         </h2>
     </x-slot>
 
@@ -25,7 +28,7 @@ use App\Models\Owner;
                                     <button type="button" onclick="location.href='{{ route('admin.owner.create') }}'"
                                             class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4
                                             focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center
-                                            mr-2 mb-2"><i class="fa-solid fa-plus"></i>新規作成
+                                            mr-2 mb-2"><i class="fa-solid fa-plus"></i>{{ __('common.btn_labels.register') }}
                                     </button>
                                 </div>
                                 <!-- Flash Messages with Session-->
@@ -37,22 +40,22 @@ use App\Models\Owner;
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
                                             <th scope="col" class="py-3 px-6">
-                                                ID
+                                                {{ __('owner.attribute_labels.id') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-                                                お名前
+                                                {{ __('owner.attribute_labels.name') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-                                                メールアドレス
+                                                {{ __('owner.attribute_labels.email') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-                                                作成日
+                                                {{ __('owner.attribute_labels.updated_at') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-
+                                                {{ __('owner.view.operation') }}
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-
+                                                {{ __('owner.view.operation') }}
                                             </th>
                                         </tr>
                                         </thead>
@@ -75,14 +78,15 @@ use App\Models\Owner;
                                                     <button type="button" onclick="location.href='{{ route('admin.owner.edit', ['id' => $model->id]) }}'"
                                                             class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br
                                                             focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50
-                                                            dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-pen"></i>編集
+                                                            dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center mr-2 mb-2">
+                                                            <i class="fa-solid fa-pen"></i>{{ __('common.btn_labels.edit') }}
                                                     </button>
                                                 </td>
                                                 <td class="py-4 px-6">
                                                     <button type="button" data-modal-toggle="delete{{ $model->id }}Modal"
                                                             class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4
                                                             focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80
-                                                            font-medium rounded-lg text-sm  px-3 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-trash"></i>削除
+                                                            font-medium rounded-lg text-sm  px-3 py-2.5 text-center mr-2 mb-2"><i class="fa-solid fa-trash"></i>{{ __('common.btn_labels.destroy') }}
                                                     </button>
                                                 </td>
                                                 <x-form.modal-delete :model="$model" />
