@@ -28,5 +28,6 @@ return [
         'total_price' => '合計金額',
         'checkout' => '購入する',
         'tax' => '税込（円）',
+        'no_item_in_cart' => '商品がカートに存在しません。',
     ]
 ];

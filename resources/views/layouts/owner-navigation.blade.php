@@ -13,24 +13,23 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('owner.dashboard')"
-                                :active="request()->routeIs('owner.dashboarddashboard')">
+                                :active="request()->routeIs('owner.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('owner.shop.index')" :active="request()->routeIs('owner.shop.index')">
-                        {{ __('店舗情報') }}
+                        {{ __('shop.attribute_labels.information') }}<i class="fa-brands fa-readme ml-1"></i>
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('owner.image.index')" :active="request()->routeIs('owner.image.index')">
-                        {{ __('商品画像') }}
+                        {{ __('shop.image_title') }}<i class="fa-solid fa-image ml-1"></i>
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('owner.product.index')"
-                                :active="request()->routeIs('owner.product.index')">
-                        {{ __('商品管理') }}
+                    <x-nav-link :href="route('owner.product.index')" :active="request()->routeIs('owner.product.index')">
+                        {{ __('shop.product_title') }}<i class="fa-solid fa-gift ml-1"></i>
                     </x-nav-link>
                 </div>
             </div>
@@ -41,7 +40,7 @@
                     <x-slot name="trigger">
                         <button
                             class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ Auth::user()->name }}</div><i class="fa-solid fa-street-view ml-1"></i>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"

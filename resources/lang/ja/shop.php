@@ -3,6 +3,8 @@
 return [
     'title' => '店舗画像管理',
     'edit_title' => '店舗画像編集',
+    'image_title' => '商品画像',
+    'product_title' => '商品管理',
     'attribute_labels' => [
         'id' => 'ID',
         'owner_id' => '店舗オーナーID',
