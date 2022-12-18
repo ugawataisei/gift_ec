@@ -159,4 +159,25 @@ class Product extends Model
             return $query;
         }
     }
+
+    /**
+     *
+     * @param Builder $query
+     * @param string|null $search_keyword
+     * @param Request $request
+     * @return Builder
+     */
+    public function scopeSearchKeyword(Builder $query, string|null $search_keyword, Request $request): Builder
+    {
+        if ($request->has('search_keyword')) {
+            $spaceConvert = mb_convert_kana($search_keyword, 's');
+            $keywords = preg_split('/\s+/', $spaceConvert, -1, PREG_SPLIT_NO_EMPTY);
+            foreach ($keywords as $word) {
+                $query->where('products.name', 'like', '%' . $word . '%');
+            }
+            return $query;
+        } else {
+            return $query;
+        }
+    }
 }

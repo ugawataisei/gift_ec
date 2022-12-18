@@ -23,7 +23,8 @@ class ItemService
         $query = Product::query();
         $query->where('is_selling', 1)
             ->sortOrder((int)$request->get('order_id'), $request)
-            ->selectCategory((int)$request->get('category_id'), $request);
+            ->selectCategory((int)$request->get('category_id'), $request)
+            ->searchKeyword($request->get('search_keyword'), $request);
         return $query->get();
     }
 
