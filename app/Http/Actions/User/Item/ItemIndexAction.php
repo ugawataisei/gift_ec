@@ -27,9 +27,11 @@ class ItemIndexAction extends Controller
     public function __invoke(Request $request): View
     {
         /** @var Collection|Product $models */
-        $models = $this->itemService->returnSellingItem();
+        $models = $this->itemService->returnSellingItem($request);
 
-        return view('user.item.index', compact('models'));
+        $selectCategoryList = $this->itemService->returnSearchCategoryList();
+
+        return view('user.item.index', compact('models', 'selectCategoryList'));
     }
 }
 

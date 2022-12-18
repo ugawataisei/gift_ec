@@ -3,15 +3,14 @@
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 
-/** @var Collection $models */
+/** @var Collection|Product $models */
 /** @var Product $model */
+/** @var array $selectCategoryList */
 
 ?>
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('common.item_title') }}
-        </h2>
+        <x-form.search-input :selectCategoryList="$selectCategoryList"/>
     </x-slot>
 
     <div class="py-12">

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -14,7 +14,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
- * @property Owner|null $owner
+ * @property SecondaryCategory|null secondary_categories
  */
 class PrimaryCategory extends Model
 {
@@ -30,9 +30,8 @@ class PrimaryCategory extends Model
         'sort_order',
     ];
 
-    //relation
-    public function owner(): HasOne
+    public function secondary_categories(): HasMany
     {
-        return $this->hasOne(SecondaryCategory::class);
+        return $this->hasMany(SecondaryCategory::class);
     }
 }
