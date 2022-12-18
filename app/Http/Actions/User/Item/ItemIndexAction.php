@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Services\ItemService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ItemIndexAction extends Controller
@@ -22,14 +23,21 @@ class ItemIndexAction extends Controller
     /**
      *
      * @param Request $request
-     * @return View
+     * @return View|RedirectResponse
      */
-    public function __invoke(Request $request): View
+    public function __invoke(Request $request): View|RedirectResponse
     {
-        /** @var Collection|Product $models */
-        $models = $this->itemService->returnSellingItem();
+        if ($request->has('reset')) { //検索リセット
+            return redirect(strtok($request->fullUrl(), '?'));
+        }
 
-        return view('user.item.index', compact('models'));
+        /** @var Collection|Product $models */
+        $models = $this->itemService->returnSellingItem($request);
+
+        /** @var array $selectCategoryList */
+        $selectCategoryList = $this->itemService->returnSearchCategoryList();
+
+        return view('user.item.index', compact('models', 'selectCategoryList'));
     }
 }
 

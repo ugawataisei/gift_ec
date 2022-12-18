@@ -27,6 +27,7 @@
         "@popperjs/core": "^2.11.6",
         "bootstrap": "^5.2.2",
         "jquery": "^3.6.1",
+        "select2": "^4.1.0-rc.0",
         "swiper": "^8.4.5"
     }
 }

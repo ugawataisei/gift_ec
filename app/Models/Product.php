@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Consts\CommonConst;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 /**
@@ -117,5 +120,64 @@ class Product extends Model
         return Stock::query()
             ->where('product_id', $this->id)
             ->sum('quantity');
+    }
+
+    /**
+     *
+     * @param Builder $query
+     * @param int $categoryId
+     * @param Request $request
+     * @return Builder
+     */
+    public function scopeSelectCategory(Builder $query, int $categoryId, Request $request): Builder
+    {
+        if ($request->has('category_id')) {
+            return $query->where('secondary_category_id', $categoryId);
+        } else {
+            return $query;
+        }
+    }
+
+    /**
+     *
+     * @param Builder $query
+     * @param int $orderId
+     * @param Request $request
+     * @return Builder
+     */
+    public function scopeSortOrder(Builder $query, int $orderId, Request $request): Builder
+    {
+        if ($request->has('order_id')) {
+            return match ($orderId) {
+                CommonConst::ORDER_HEIGHT => $query->orderby('price', 'desc'),
+                CommonConst::ORDER_LOW => $query->orderby('price', 'asc'),
+                CommonConst::ORDER_RECENT => $query->orderby('created_at', 'desc'),
+                CommonConst::ORDER_OLDEST => $query->orderby('created_at', 'asc'),
+                default => $query->orderby('sort_order', 'asc'), //お気に入り含む
+            };
+        } else {
+            return $query;
+        }
+    }
+
+    /**
+     *
+     * @param Builder $query
+     * @param string|null $search_keyword
+     * @param Request $request
+     * @return Builder
+     */
+    public function scopeSearchKeyword(Builder $query, string|null $search_keyword, Request $request): Builder
+    {
+        if ($request->has('search_keyword')) {
+            $spaceConvert = mb_convert_kana($search_keyword, 's');
+            $keywords = preg_split('/\s+/', $spaceConvert, -1, PREG_SPLIT_NO_EMPTY);
+            foreach ($keywords as $word) {
+                $query->where('products.name', 'like', '%' . $word . '%');
+            }
+            return $query;
+        } else {
+            return $query;
+        }
     }
 }
