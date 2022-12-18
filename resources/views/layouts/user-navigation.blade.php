@@ -4,9 +4,9 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <div class="w-10 h-20 mt-2.5">
                     <a href="{{ route('user.dashboard') }}">
-                        <x-navi-logo class="block h-10 w-auto fill-current text-gray-600" />
+                        <x-navi-logo />
                     </a>
                 </div>
 
@@ -26,6 +26,13 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user.cart.index')" :active="request()->routeIs('user.cart.index')">
                         {{ __('cart.title') }}<i class="fa-solid fa-cart-shopping ml-1"></i>
+                    </x-nav-link>
+                </div>
+
+                {{--  todo: 2022-12-18 お問い合わせ機能実装  --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('user.item.index')" :active="request()->routeIs('user.item.index')">
+                        {{ __('cart.faq_title') }}<i class="fa-solid fa-phone-flip ml-1"></i>
                     </x-nav-link>
                 </div>
 

@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\User;
+use App\Jobs\SendSuccessMailJob;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -142,6 +143,20 @@ class CartService
      */
     public function successCheckout(): void
     {
+        $models = Cart::query()->where('user_id', Auth::id())->get();
+        $cartInfo = [];
+        foreach ($models as $key => $model) {
+            /** @var Cart $model */
+            $cartInfo[$key]['user_email'] = $model->user->email;
+            $cartInfo[$key]['owner_email'] = $model->product->shop->owner->email;
+            $cartInfo[$key]['product_id'] = $model->product->id;
+            $cartInfo[$key]['product_name'] = $model->product->name;
+            $cartInfo[$key]['product_price'] = $model->product->price;
+            $cartInfo[$key]['product_quantity'] = $model->quantity;
+        }
+
+        SendSuccessMailJob::dispatch($cartInfo);
+
         Cart::query()->where('user_id', Auth::id())->delete();
     }
 

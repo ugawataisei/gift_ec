@@ -12177,6 +12177,10 @@ input:checked + .toggle-bg {
     margin-right: 0.75rem;
 }
 
+.mt-2\.5 {
+    margin-top: 0.625rem;
+}
+
 .block {
     display: block;
 }
@@ -12303,6 +12307,10 @@ input:checked + .toggle-bg {
 
 .w-1\/2 {
     width: 50%;
+}
+
+.w-10 {
+    width: 2.5rem;
 }
 
 .max-w-6xl {
