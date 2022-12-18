@@ -4,6 +4,7 @@
 return [
     'title' => 'カート',
     'stripe_title' => 'Stripe決済ページ',
+    'faq_title' => 'お問い合わせ',
     'stripe_redirect_message' => '決済ページへリダイレクトします。',
     'attribute_labels' => [
         'id' => 'ID',
